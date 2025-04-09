@@ -29,9 +29,9 @@ Co-Dev:
 # Contribution TutoriaL
 
 ## Pre-Requsites
-Required JDK Version : Latest JDK 24 as of April 9 2025
+Required JDK Version : Latest JDK 24 as of April 9 2025 [![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?logo=openjdk&logoColor=white)](#)
 
-IDE : VSC 
+IDE : VSC  [![Visual Studio Code](https://custom-icon-badges.demolab.com/badge/Visual%20Studio%20Code-0078d7.svg?logo=vsc&logoColor=white)](#)
 
 Art: Aseprite
 
@@ -44,7 +44,7 @@ Sound: FL-Studio
 | `dev`        | Integration branch for testing.    |
 | `Sigma`  | For Frostsihyper.     |
 | `trump`  | For Ezickle.     |
-| `dwayne`  | For dwayne     |
+| `dwayne`  | For Hallow-Gl     |
 
 ## Code Of Conduct
 
