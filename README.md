@@ -28,14 +28,11 @@ Co-Dev:
 
 # Contribution TutoriaL
 
-## Pre-Requsites
-Required JDK Version : Latest JDK 24 as of April 9 2025 [![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?logo=openjdk&logoColor=white)](#)
+## Pre-Requsites (MUST!)
+JDK Version 21 
+GDX Liftoff Ver 1.13.1.3
 
-IDE : VSC  [![Visual Studio Code](https://custom-icon-badges.demolab.com/badge/Visual%20Studio%20Code-0078d7.svg?logo=vsc&logoColor=white)](#)
 
-Art: Aseprite
-
-Sound: FL-Studio 
 
 ## 🚀 Branch Structure
 | Branch        | Purpose                             |
