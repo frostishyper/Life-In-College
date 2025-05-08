@@ -28,12 +28,6 @@ Co-Dev:
 
 # Contribution TutoriaL
 
-## Pre-Requsites (MUST!)
-JDK Version 21 
-
-GDX Liftoff Ver 1.13.1.3
-
-
 
 ## 🚀 Branch Structure
 | Branch        | Purpose                             |
