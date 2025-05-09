@@ -1,8 +1,14 @@
 package com.badlogic.D6D.lwjgl3;
 
+
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.badlogic.D6D.Main;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.Input;
 
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
