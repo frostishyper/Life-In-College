@@ -41,3 +41,53 @@ public class Lwjgl3Launcher {
         return configuration;
     }
 }
+
+class TestScreen implements ApplicationListener {
+    private SpriteBatch batch;
+    private PortraitManager portraitManager;
+    
+    @Override
+    public void create() {
+        batch = new SpriteBatch();
+        portraitManager = new PortraitManager();
+
+        Gdx.input.setInputProcessor(new InputAdapter() {
+            @Override
+            public boolean keyDown(int keycode) {
+                if (keycode == Input.Keys.SPACE) {
+                    portraitManager.nextPortrait();
+                }
+                return true;
+            }
+            });
+    }
+
+    @Override
+    public void render() {
+        // Clear the screen with a black color
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        // Draw the current portrait at position (100, 100)
+        batch.begin();
+        portraitManager.draw(batch, 0, 0); 
+        batch.end();
+    }
+
+    @Override
+    public void resize(int width, int height) {}
+
+    @Override
+    public void pause() {}
+
+    @Override
+    public void resume() {}
+
+    @Override
+    public void dispose() {
+        batch.dispose();
+        portraitManager.dispose();
+    }
+
+    
+}
