@@ -12,8 +12,8 @@ public class MainGame extends Game {
         while (!Loader.update()) {
             // Wait for assets to load
         }
-
         // Goes to main menu screen after assets are loaded
+        Loader.prepareSFXAssets(); // Prepares the SFX assets
         setScreen(new MenuScreen(this)); 
     }
 

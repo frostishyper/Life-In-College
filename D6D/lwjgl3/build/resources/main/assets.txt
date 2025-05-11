@@ -1,6 +1,4 @@
-Buttons.atlas
-Buttons.png
-General.atlas
-General.png
-Stats.atlas
-Stats.png
+Click.wav
+Startup.ogg
+Ui_Assets.atlas
+Ui_Assets.png
