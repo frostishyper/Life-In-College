@@ -1,0 +1,13 @@
+# Ignore build files
+/build/
+/out/
+/bin/
+
+# Gradle cache
+.gradle/
+*.log
+
+# IntelliJ / VS Code project files
+*.iml
+.idea/
+.vscode/
