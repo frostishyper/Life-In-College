@@ -1,0 +1,9 @@
+Click.wav
+Data/Items.json
+Data/SaveGame.json
+Data/Traits.json
+PlayerPortraits.atlas
+PlayerPortraits.png
+Startup.ogg
+Ui_Assets.atlas
+Ui_Assets.png
