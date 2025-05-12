@@ -1,0 +1,30 @@
+[
+    {
+        "id": "Trait01",
+        "name": "Studious",
+        "description": "You have always been a studious student, able to pick up quickly on study material. However, you sacrificed your social skills in the process.",
+        "modifiers": {
+            "Intelligence": 3,
+            "Charisma": -3
+        }
+    },
+    {
+        "id": "Trait02",
+        "name": "Diplomat",
+        "description": "Growing up you’ve honed your people skills and groomed yourself well, but this has also put a burden on your mental health",
+        "modifiers": {
+            "Charisma": 3,
+            "Mental": -3
+        }
+    },
+    {
+        "id": "Trait03",
+        "name": "Jock",
+        "description": "From a young age you’ve always joined sports and got in really good shape in the process, but your academics skills have been neglected.",
+        "modifiers": {
+            "Intelligence": -3,
+            "Constituion": 2,
+            "Reflexes": 2
+        }
+    }
+]

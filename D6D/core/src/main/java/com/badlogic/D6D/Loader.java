@@ -25,6 +25,7 @@ public class Loader {
 
         // Point to assets to load (Atlases and SFX files)
         assetManager.load("Ui_Assets.atlas", TextureAtlas.class);
+        assetManager.load("PlayerPortraits.atlas", TextureAtlas.class);
         assetManager.load("Click.wav", Sound.class);
         assetManager.load("Startup.ogg", Music.class);
     }

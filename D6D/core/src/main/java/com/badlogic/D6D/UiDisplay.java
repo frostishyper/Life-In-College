@@ -18,14 +18,22 @@ public class UiDisplay {
     private float stateTime = 0f;
 
     // Constructor: Handles both static and animated displays
+    // Display Elements Only (No Clicks)
     public UiDisplay(TextureAtlas atlas, String regionName, int frameCount, float totalTime,
                      float x, float y, float width, float height, Viewport viewport) {
 
         Array<TextureRegion> frames = new Array<>();
-        for (int i = 1; i <= frameCount; i++) {
-            TextureRegion frame = atlas.findRegion(regionName, i);
+        if (frameCount == 1) {
+            TextureRegion frame = atlas.findRegion(regionName); // No index for single frame
             if (frame != null) {
                 frames.add(frame);
+            }
+        } else {
+            for (int i = 1; i <= frameCount; i++) {
+                TextureRegion frame = atlas.findRegion(regionName, i);
+                if (frame != null) {
+                    frames.add(frame);
+                }
             }
         }
 
@@ -57,6 +65,18 @@ public class UiDisplay {
             batch.draw(staticFrame, bounds.x, bounds.y, bounds.width, bounds.height);
         }
     }
+
+    // README (Use Case Example)
+    //
+    // In Local Variable
+    // private UiDisplay mainTitle;
+    //
+    // In Show()
+    // mainTitle = new UiDisplay(atlas,"Ui_MainTitle",4,1.0f,220, 300, 800, 300,screenCamera.getViewport());
+    //
+    // In render()
+    // mainTitle.update(delta);
+    // mainTitle.render(batch); // In Draw Call/Batch
 }
 
 

@@ -13,14 +13,14 @@ import com.badlogic.gdx.audio.Music;
 public class MenuScreen implements Screen {
 
     // Local Variables
-    private final MainGame game;                     // Reference to the main game class
+    private final MainGame game;                      // Reference to the main game class
     private SpriteBatch batch;                       // Used for drawing 2D elements
-    private MonitorScreen monitorScreen;             // Handles animated background          (MonitorScreen.java)
-    private ScreenCamera screenCamera;               // Encapsulates camera + viewport logic (ScreenCamera.java)
-    private UiDisplay mainTitle;                     // Title with animation                 (UiDisplay.java)
-    private UiButton playButton;                     // Play button with hover animation     (UiButton.java)
-    private UiButton exitButton;                     // Exit button with hover animation     (UiButton.java)
-    private Music startupMusic;                      // Intro music that plays once
+    private MonitorScreen monitorScreen;            // Handles animated background          (MonitorScreen.java)
+    private ScreenCamera screenCamera;             // Encapsulates camera + viewport logic (ScreenCamera.java)
+    private UiDisplay mainTitle;                  // Title with animation                 (UiDisplay.java)
+    private UiButton playButton;                 // Play button with hover animation     (UiButton.java)
+    private UiButton exitButton;                // Exit button with hover animation     (UiButton.java)
+    private Music startupMusic;                // Intro music that plays once
 
     // Constructor for MenuScreen
     // Initializes the screen with a reference to the main game class
@@ -46,11 +46,11 @@ public class MenuScreen implements Screen {
         monitorScreen = new MonitorScreen(Loader.getAtlas("Ui_Assets.atlas"));
 
         // Get Atlas From Loader
-        TextureAtlas atlas = Loader.getAtlas("Ui_Assets.atlas");
+        TextureAtlas ui = Loader.getAtlas("Ui_Assets.atlas");
         // Intialize Screen Elements
-        mainTitle = new UiDisplay(atlas,"Ui_MainTitle",4,1.0f,220, 300, 800, 300,screenCamera.getViewport());
-        playButton = new UiButton(atlas, "BTN_Play", 7, 1.2f, 550, 220, 160, 60, screenCamera.getViewport());
-        exitButton = new UiButton(atlas, "BTN_Exit", 6, 1.0f, 550, 120, 160, 60, screenCamera.getViewport());
+        mainTitle = new UiDisplay(ui,"Ui_MainTitle",4,1.0f,220, 300, 800, 300,screenCamera.getViewport());
+        playButton = new UiButton(ui, "BTN_Play", 7, 1.2f, 550, 220, 160, 60, screenCamera.getViewport());
+        exitButton = new UiButton(ui, "BTN_Exit", 6, 1.0f, 550, 120, 160, 60, screenCamera.getViewport());
 
         //Exit Button
         exitButton.setOnClick(() -> Gdx.app.exit());
@@ -76,6 +76,7 @@ public class MenuScreen implements Screen {
         exitButton.update(delta);
 
         // Clicks
+        playButton.setOnClick(() -> {game.setScreen(new PlayerCreator(game));});
         exitButton.setOnClick(() -> Gdx.app.exit());
 
         // Draw Call (Screen Elements)
@@ -105,10 +106,12 @@ public class MenuScreen implements Screen {
     public void dispose() {
         // Release music resources when the screen is disposed
         if (startupMusic != null) {
+            batch.dispose();
             startupMusic.dispose();
         }
     }
 
-    @Override public void pause() {}     // Not used but required by Screen interface
-    @Override public void resume() {}    // Not used but required by Screen interface
+    // Unused methods 
+    @Override public void pause() {}     
+    @Override public void resume() {}    
 }

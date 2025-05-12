@@ -23,6 +23,7 @@ public class UiButton {
     private Runnable onClick; // Function to call when the button is clicked
     
     // Constructor for UiButton
+    // Controls Only (Buttons, Etc)
     // Initializes the button with its animation frames and position
     // Takes a TextureAtlas, region name, frame count, total time for animation, and position/size
     public UiButton(TextureAtlas atlas, String regionName, int frameCount, float totalTime,
