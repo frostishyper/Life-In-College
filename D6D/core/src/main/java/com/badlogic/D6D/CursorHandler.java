@@ -1,5 +1,6 @@
 package com.badlogic.D6D;
 
+// Import Statements
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -8,10 +9,15 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.audio.Sound;
 
+// Custom Cursor Handler Class
+// This class handles the custom cursor and click sound effects
 public class CursorHandler extends InputAdapter{
     
+    // Local Variables
     private final Sound clickSound;
 
+    // Constructor
+    // Initializes the custom cursor and click sound
     public CursorHandler() {
         // Load the click sound from the Loader
         this.clickSound = Loader.getClickSound();
@@ -36,6 +42,7 @@ public class CursorHandler extends InputAdapter{
         }
     }
 
+    // Click Sound Behavior
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (button == 0) { // Left mouse button

@@ -1,119 +1,101 @@
 package com.badlogic.D6D;
 
+// Import Statements
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.audio.Music;
 
+// This is Screen in game
+// This class is the MAIN MENU
 public class MenuScreen implements Screen {
 
-    private final MainGame game;
-    private SpriteBatch batch; // Allows Multiple textures in one draw call
-    private TextureRegion background; // Background texture region
-    private Animation<TextureRegion> backgroundAnimation; // Animation for the background
-    private float animationTime; // Tracks elapsed time for the animation
-    private OrthographicCamera camera; // 2D camera (Flat) [Renders World  wihtout any perspective]
-    private Viewport viewport; // Mantains aspect ratio and proper scaling
-    private Music startupMusic; // Declare startupMusic as a class-level variable
+    // Local Variables
+    private final MainGame game;                     // Reference to the main game class
+    private SpriteBatch batch;                       // Used for drawing 2D elements
+    private MonitorScreen monitorScreen;             // Handles animated background          (MonitorScreen.java)
+    private ScreenCamera screenCamera;               // Encapsulates camera + viewport logic (ScreenCamera.java)
+    private UiDisplay mainTitle;                     // Title with animation                 (UiDisplay.java)
+    private UiButton playButton;                     // Play button with hover animation     (UiButton.java)
+    private UiButton exitButton;                     // Exit button with hover animation     (UiButton.java)
+    private Music startupMusic;                      // Intro music that plays once
 
-    private static final float WORLD_WIDTH = 1280f; // Virtual Width (To maintain aspect ratio)
-    private static final float WORLD_HEIGHT = 720f; // Virtual Height (To maintain aspect ratio)
-    // Are Basically used as reference when scaling the screen
-    // Initial Screen Size is 1280x720 (From Inside Lwjgl3Launcher)
-
-    // Constructor For MenuScreen
-
+    // Constructor for MenuScreen
+    // Initializes the screen with a reference to the main game class
     public MenuScreen(MainGame game) {
         this.game = game;
     }
+    
 
-
-    // Initiaalizes the screen elements
-     @Override
+    
+    @Override
     public void show() {
-
-        // Startup music
+        // Load and play intro music (Once)
         startupMusic = Loader.getStartupMusic();
         if (startupMusic != null) {
-            startupMusic.setLooping(false); // Ensure it doesn't loop
-            startupMusic.play(); // Play the music
+            startupMusic.setLooping(false);
+            startupMusic.play();
         }
 
-        batch = new SpriteBatch(); // Prep Asset for drawing
+        batch = new SpriteBatch();
 
-        // Setup camera and viewport (2D not perspective distortion)
-        camera = new OrthographicCamera();
-        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
-        viewport.apply();
+        // Initialize camera and animated monitor background
+        screenCamera = new ScreenCamera();
+        monitorScreen = new MonitorScreen(Loader.getAtlas("Ui_Assets.atlas"));
 
-        // Center the camera on the screen
-        camera.position.set(WORLD_WIDTH / 2f, WORLD_HEIGHT / 2f, 0);
-        camera.update();
-
-        // Get Assets from the Loader
+        // Get Atlas From Loader
         TextureAtlas atlas = Loader.getAtlas("Ui_Assets.atlas");
-        
-        // Create animation frames (initialize the array)
-        Array<TextureRegion> frames = new Array<>();
-        // Add frames to the array using for loop
-        for (int i = 1; i <= 4; i++) {
-            TextureRegion frame = atlas.findRegion("Ui_Screen_Border", i);
-            if (frame != null) {
-                frames.add(frame);
-            }
-        }
+        // Intialize Screen Elements
+        mainTitle = new UiDisplay(atlas,"Ui_MainTitle",4,1.0f,220, 300, 800, 300,screenCamera.getViewport());
+        playButton = new UiButton(atlas, "BTN_Play", 7, 1.2f, 550, 220, 160, 60, screenCamera.getViewport());
+        exitButton = new UiButton(atlas, "BTN_Exit", 6, 1.0f, 550, 120, 160, 60, screenCamera.getViewport());
 
-        // Create the animation (300ms per frame, looping)
-        backgroundAnimation = new Animation<>(0.3f, frames, Animation.PlayMode.LOOP);
-        animationTime = 0f; // Initialize animation time
+        //Exit Button
+        exitButton.setOnClick(() -> Gdx.app.exit());
 
-        // Set Cursor Handler
-        Gdx.input.setInputProcessor(new CursorHandler());
+        // Set up custom cursor input handling (CursorHandler.java)
+        Gdx.input.setInputProcessor(new CursorHandler()); 
     }
-    
 
     @Override
-public void render(float delta) {
-    // Clear the screen with black
-    Gdx.gl.glClearColor(0, 0, 0, 1);
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    
-    // Update the camera when the screen is resized
-    camera.update();
-    batch.setProjectionMatrix(camera.combined);
+    public void render(float delta) {
+        // Clear screen with black background
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-    // Update animation time
-    animationTime += delta;
+        // Update camera and input-based animations
+        screenCamera.update();
+        batch.setProjectionMatrix(screenCamera.getCamera().combined);
 
-    // Get the current frame of the animation
-    TextureRegion currentFrame = backgroundAnimation.getKeyFrame(animationTime);
+        // Update Animation Times
+        monitorScreen.update(delta);
+        mainTitle.update(delta);
+        playButton.update(delta);
+        exitButton.update(delta);
 
-    // Start the draw call for screen elements
-    batch.begin();
-    if (currentFrame != null) {
-        // Draw the current frame of the animation
-        batch.draw(currentFrame, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
-    }
-    batch.end();
+        // Clicks
+        exitButton.setOnClick(() -> Gdx.app.exit());
+
+        // Draw Call (Screen Elements)
+        batch.begin();
+        monitorScreen.render(batch);
+        mainTitle.render(batch);
+        playButton.render(batch);
+        exitButton.render(batch);
+        batch.end();
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        // Ensure viewport scales correctly when screen size changes
+        screenCamera.resize(width, height);
     }
-
 
     @Override
     public void hide() {
-        // Stop the music when the screen is hidden
+        // Stop music if screen is hidden or changed
         if (startupMusic != null && startupMusic.isPlaying()) {
             startupMusic.stop();
         }
@@ -121,13 +103,12 @@ public void render(float delta) {
 
     @Override
     public void dispose() {
-        // Dispose of resources specific to the menu screen
+        // Release music resources when the screen is disposed
         if (startupMusic != null) {
             startupMusic.dispose();
         }
     }
 
-    //Currently unused methods
-    @Override public void pause() {}
-    @Override public void resume() {}
+    @Override public void pause() {}     // Not used but required by Screen interface
+    @Override public void resume() {}    // Not used but required by Screen interface
 }
