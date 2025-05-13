@@ -1,1 +1,9 @@
-.gitkeep
+Click.wav
+Data/Events.json
+Data/SaveGame.json
+Data/Tester.json
+PlayerPortraits.atlas
+PlayerPortraits.png
+Startup.ogg
+Ui_Assets.atlas
+Ui_Assets.png
