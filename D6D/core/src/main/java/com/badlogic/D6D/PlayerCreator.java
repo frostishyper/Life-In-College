@@ -11,18 +11,19 @@ import com.badlogic.gdx.utils.Array;
 
 public class PlayerCreator implements Screen {
 
-    private final MainGame game;                           // Reference to the main game class
-    private SpriteBatch batch;                            // Used for drawing 2D elements
-    private MonitorScreen monitorScreen;                 // Handles animated background         (MonitorScreen.java)
-    private ScreenCamera screenCamera;                  // Encapsulates camera + viewport logic (ScreenCamera.java)
-    private final Array<UiDisplay> uiElements = new Array<>(); // Array to hold elements handled by (UiDisplay.java)
-    
-
-    private final int[] statValues = {5, 5, 5, 5, 5, 5}; // Intel, Mental, Con, Swift, Courage, Charisma
+    private final MainGame game;
+    private SpriteBatch batch;
+    private MonitorScreen monitorScreen;
+    private ScreenCamera screenCamera;
+    private final Array<UiDisplay> uiElements = new Array<>();
     private int selectedStatIndex = 0;
     private BitmapFont font;
 
-     // Constructor for PlayGame screen
+    // Stat Names
+    private final String[] statNames = {
+            "Intelligence", "Mental", "Constitution", "Swiftness", "Courage", "Charisma"
+    };
+
     public PlayerCreator(MainGame game) {
         this.game = game;
     }
@@ -43,23 +44,23 @@ public class PlayerCreator implements Screen {
 
         // Portrait & Frame
         uiElements.add(new UiDisplay(ui, "Ui_Portrait_Frame", 1, 1.0f, 50, 500, 150, 150, screenCamera.getViewport()));
-        uiElements.add(new UiDisplay(player, "MaleNeutralAway", 1, 1.0f, 70, 520, 120, 120, screenCamera.getViewport()));
+        uiElements
+                .add(new UiDisplay(player, "MaleNeutralAway", 1, 1.0f, 70, 520, 120, 120, screenCamera.getViewport()));
 
-        //Stat Frames
-        uiElements.add(new UiDisplay(ui, "BTN_Select", 2, 1.0f, 230, 580, 200, 70, screenCamera.getViewport()));
-        uiElements.add(new UiDisplay(ui, "BTN_Select", 1, 1.0f, 230, 500, 200, 70, screenCamera.getViewport()));
-        uiElements.add(new UiDisplay(ui, "BTN_Select", 1, 1.0f, 230, 420, 200, 70, screenCamera.getViewport()));
-        uiElements.add(new UiDisplay(ui, "BTN_Select", 1, 1.0f, 230, 340, 200, 70, screenCamera.getViewport()));
-        uiElements.add(new UiDisplay(ui, "BTN_Select", 1, 1.0f, 230, 260, 200, 70, screenCamera.getViewport()));
-        uiElements.add(new UiDisplay(ui, "BTN_Select", 1, 1.0f, 230, 180, 200, 70, screenCamera.getViewport()));
+        // Stat Frames
+        for (int i = 0; i < 6; i++) {
+            int y = 580 - i * 80;
+            uiElements.add(
+                    new UiDisplay(ui, "BTN_Select", i == 0 ? 2 : 1, 1.0f, 230, y, 200, 70, screenCamera.getViewport()));
+        }
 
         // Stat Icons
-        uiElements.add(new UiDisplay(ui, "STAT_Intel", 1, 1.0f, 240, 590, 50, 50, screenCamera.getViewport()));
-        uiElements.add(new UiDisplay(ui, "STAT_Mental", 1, 1.0f, 240, 510, 50, 50, screenCamera.getViewport()));
-        uiElements.add(new UiDisplay(ui, "STAT_Constitution", 1, 1.0f, 240, 430, 50, 50, screenCamera.getViewport()));
-        uiElements.add(new UiDisplay(ui, "STAT_Swiftness", 1, 1.0f, 240, 350, 50, 50, screenCamera.getViewport()));
-        uiElements.add(new UiDisplay(ui, "STAT_Courage", 1, 1.0f, 240, 270, 50, 50, screenCamera.getViewport()));
-        uiElements.add(new UiDisplay(ui, "STAT_Charisma", 1, 1.0f, 240, 190, 50, 50, screenCamera.getViewport()));
+        String[] iconNames = { "STAT_Intel", "STAT_Mental", "STAT_Constitution", "STAT_Swiftness", "STAT_Courage",
+                "STAT_Charisma" };
+        for (int i = 0; i < iconNames.length; i++) {
+            int y = 590 - i * 80;
+            uiElements.add(new UiDisplay(ui, iconNames[i], 1, 1.0f, 240, y, 50, 50, screenCamera.getViewport()));
+        }
 
         // + / - Buttons
         for (int i = 0; i < 6; i++) {
@@ -80,22 +81,27 @@ public class PlayerCreator implements Screen {
 
         // Update Animation Times
         monitorScreen.update(delta);
-        for (UiDisplay element : uiElements) element.update(delta);
+        for (UiDisplay element : uiElements)
+            element.update(delta);
 
         // Draw Call (Screen Elements)
         batch.begin();
         monitorScreen.render(batch);
-        for (UiDisplay element : uiElements) element.render(batch);
+        for (UiDisplay element : uiElements)
+            element.render(batch);
 
         // Draw stat values
-        int[] statYPositions = {590, 510, 430, 350, 270, 190};
-        for (int i = 0; i < statValues.length; i++) {
+        int[] statYPositions = { 590, 510, 430, 350, 270, 190 };
+        Player player = Player.getInstance();
+
+        for (int i = 0; i < statNames.length; i++) {
             if (i == selectedStatIndex) {
                 font.setColor(1, 1, 0, 1); // Highlight selected (NOt Connected to Animation)
             } else {
                 font.setColor(1, 1, 1, 1); // White
             }
-            font.draw(batch, String.valueOf(statValues[i]), 295, statYPositions[i] + 35);
+            int value = player.getStat(statNames[i]);
+            font.draw(batch, String.valueOf(value), 295, statYPositions[i] + 35);
         }
 
         batch.end();
@@ -108,11 +114,13 @@ public class PlayerCreator implements Screen {
             float x = Gdx.input.getX();
             float y = Gdx.graphics.getHeight() - Gdx.input.getY(); // Flip Y
 
-            for (int i = 0; i < 6; i++) {
+            Player player = Player.getInstance();
+
+            for (int i = 0; i < statNames.length; i++) {
                 int yStart = 590 - (i * 80);
                 int yEnd = yStart + 50;
 
-                // Select stat by clicking icon
+                // Select stat
                 if (x >= 240 && x <= 290 && y >= yStart && y <= yEnd) {
                     selectedStatIndex = i;
                     return;
@@ -120,13 +128,21 @@ public class PlayerCreator implements Screen {
 
                 // Plus Button
                 if (x >= 310 && x <= 350 && y >= yStart && y <= yStart + 40) {
-                    if (statValues[i] < 20) statValues[i]++;
+                    String stat = statNames[i];
+                    if (player.getStat(stat) < 20) {
+                        player.adjustStat(stat, 1);
+                        selectedStatIndex = i;
+                    }
                     return;
                 }
 
                 // Minus Button
                 if (x >= 360 && x <= 400 && y >= yStart && y <= yStart + 40) {
-                    if (statValues[i] > 1) statValues[i]--;
+                    String stat = statNames[i];
+                    if (player.getStat(stat) > 1) {
+                        player.adjustStat(stat, -1);
+                        selectedStatIndex = i; //
+                    }
                     return;
                 }
             }
@@ -152,8 +168,12 @@ public class PlayerCreator implements Screen {
         }
     }
 
-
     // Unused methods
-    @Override public void pause() {}     // Not used but required by Screen interface
-    @Override public void resume() {}    // Not used but required by Screen interface
+    @Override
+    public void pause() {
+    } // Not used but required by Screen interface
+
+    @Override
+    public void resume() {
+    } // Not used but required by Screen interface
 }
