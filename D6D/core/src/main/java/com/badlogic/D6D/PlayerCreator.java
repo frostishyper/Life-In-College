@@ -4,6 +4,7 @@ package com.badlogic.D6D;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
@@ -15,8 +16,13 @@ public class PlayerCreator implements Screen {
     private MonitorScreen monitorScreen;                 // Handles animated background         (MonitorScreen.java)
     private ScreenCamera screenCamera;                  // Encapsulates camera + viewport logic (ScreenCamera.java)
     private final Array<UiDisplay> uiElements = new Array<>(); // Array to hold elements handled by (UiDisplay.java)
+    
 
-    // Constructor for PlayGame screen
+    private final int[] statValues = {5, 5, 5, 5, 5, 5}; // Intel, Mental, Con, Swift, Courage, Charisma
+    private int selectedStatIndex = 0;
+    private BitmapFont font;
+
+     // Constructor for PlayGame screen
     public PlayerCreator(MainGame game) {
         this.game = game;
     }
@@ -55,6 +61,15 @@ public class PlayerCreator implements Screen {
         uiElements.add(new UiDisplay(ui, "STAT_Courage", 1, 1.0f, 240, 270, 50, 50, screenCamera.getViewport()));
         uiElements.add(new UiDisplay(ui, "STAT_Charisma", 1, 1.0f, 240, 190, 50, 50, screenCamera.getViewport()));
 
+        // + / - Buttons
+        for (int i = 0; i < 6; i++) {
+            int y = 590 - (i * 80);
+            uiElements.add(new UiDisplay(ui, "BTN_Plus", 1, 1.0f, 330, y, 40, 40, screenCamera.getViewport()));
+            uiElements.add(new UiDisplay(ui, "BTN_Minus", 1, 1.0f, 380, y, 40, 40, screenCamera.getViewport()));
+        }
+
+        font = new BitmapFont();
+        font.getData().setScale(1.80f);
     }
 
     @Override
@@ -71,7 +86,51 @@ public class PlayerCreator implements Screen {
         batch.begin();
         monitorScreen.render(batch);
         for (UiDisplay element : uiElements) element.render(batch);
+
+        // Draw stat values
+        int[] statYPositions = {590, 510, 430, 350, 270, 190};
+        for (int i = 0; i < statValues.length; i++) {
+            if (i == selectedStatIndex) {
+                font.setColor(1, 1, 0, 1); // Highlight selected (NOt Connected to Animation)
+            } else {
+                font.setColor(1, 1, 1, 1); // White
+            }
+            font.draw(batch, String.valueOf(statValues[i]), 295, statYPositions[i] + 35);
+        }
+
         batch.end();
+
+        handleInput();
+    }
+
+    private void handleInput() {
+        if (Gdx.input.justTouched()) {
+            float x = Gdx.input.getX();
+            float y = Gdx.graphics.getHeight() - Gdx.input.getY(); // Flip Y
+
+            for (int i = 0; i < 6; i++) {
+                int yStart = 590 - (i * 80);
+                int yEnd = yStart + 50;
+
+                // Select stat by clicking icon
+                if (x >= 240 && x <= 290 && y >= yStart && y <= yEnd) {
+                    selectedStatIndex = i;
+                    return;
+                }
+
+                // Plus Button
+                if (x >= 310 && x <= 350 && y >= yStart && y <= yStart + 40) {
+                    if (statValues[i] < 20) statValues[i]++;
+                    return;
+                }
+
+                // Minus Button
+                if (x >= 360 && x <= 400 && y >= yStart && y <= yStart + 40) {
+                    if (statValues[i] > 1) statValues[i]--;
+                    return;
+                }
+            }
+        }
     }
 
     @Override
