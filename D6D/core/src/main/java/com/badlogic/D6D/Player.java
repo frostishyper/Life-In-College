@@ -14,12 +14,12 @@ public class Player {
         name = "Steve";
 
         stats = new HashMap<>();
-        stats.put("Intelligence", 5);
-        stats.put("Mental", 5);
-        stats.put("Constitution", 5);
-        stats.put("Swiftness", 5);
-        stats.put("Courage", 5);
-        stats.put("Charisma", 5);
+        stats.put("Intelligence", 1);
+        stats.put("Mental", 1);
+        stats.put("Constitution", 1);
+        stats.put("Swiftness", 1);
+        stats.put("Courage", 1);
+        stats.put("Charisma", 1);
     }
 
     public static Player getInstance() {
