@@ -1,7 +1,9 @@
 # Ignore build files
-/build/
-/out/
-/bin/
+build/
+out/
+bin/
+*.class
+compileTransactions/
 
 # Gradle cache
 .gradle/

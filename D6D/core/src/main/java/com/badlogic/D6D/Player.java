@@ -16,7 +16,7 @@ public class Player {
         // Init base stats
         for (String stat : new String[] {
                 "Intelligence", "Mental", "Constitution", "Swiftness", "Courage", "Charisma"
-        }) stats.put(stat, 6);
+        }) stats.put(stat, 2);
 
         recalculateDerivedStats();
     }
@@ -57,8 +57,8 @@ public class Player {
 
     // Derived stat logic
     private void recalculateDerivedStats() {
-        baseHealth = stats.get("Constitution") / 2;
-        baseSanity = stats.get("Mental") / 2;
+        baseHealth = Math.max(3, stats.get("Constitution") / 2);
+        baseSanity = Math.max(3, stats.get("Mental") / 2);
 
         // Set current to base if uninitialized
         if (currentHealth == 0) currentHealth = baseHealth;
