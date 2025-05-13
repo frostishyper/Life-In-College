@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class UiDisplay {
-    
+
     //Local Variables
     private final Rectangle bounds;
     private final Viewport viewport;
@@ -20,7 +20,7 @@ public class UiDisplay {
     // Constructor: Handles both static and animated displays
     // Display Elements Only (No Clicks)
     public UiDisplay(TextureAtlas atlas, String regionName, int frameCount, float totalTime,
-                     float x, float y, float width, float height, Viewport viewport) {
+            float x, float y, float width, float height, Viewport viewport) {
 
         Array<TextureRegion> frames = new Array<>();
         if (frameCount == 1) {
@@ -72,11 +72,10 @@ public class UiDisplay {
     // private UiDisplay mainTitle;
     //
     // In Show()
-    // mainTitle = new UiDisplay(atlas,"Ui_MainTitle",4,1.0f,220, 300, 800, 300,screenCamera.getViewport());
+    // mainTitle = new UiDisplay(atlas,"Ui_MainTitle",4,1.0f,220, 300, 800,
+    // 300,screenCamera.getViewport());
     //
     // In render()
     // mainTitle.update(delta);
     // mainTitle.render(batch); // In Draw Call/Batch
 }
-
-
