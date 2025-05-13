@@ -17,6 +17,7 @@ public class PlayerCreator implements Screen {
     private MonitorScreen monitorScreen;
     private ScreenCamera screenCamera;
     private final Array<UiDisplay> uiElements = new Array<>();
+    private UiButton PlayButton;
     private int selectedStatIndex = 0;
     private BitmapFont font;
 
@@ -97,6 +98,9 @@ public class PlayerCreator implements Screen {
 
         font = new BitmapFont();
         font.getData().setScale(1.80f);
+
+        // Play Button
+        PlayButton = new UiButton(ui, "BTN_Play", 7, 1.2f, 750, 120, 160, 60, screenCamera.getViewport());
     }
 
     @Override
@@ -107,8 +111,17 @@ public class PlayerCreator implements Screen {
 
         // Update Animation Times
         monitorScreen.update(delta);
+        PlayButton.update(delta);
         for (UiDisplay element : uiElements)
             element.update(delta);
+
+        // Play Button Click
+        PlayButton.setOnClick(() -> {
+        if (!hasUnspentPoints() && !isNameIncomplete()) {
+            Player.getInstance().name = nameBuilder.toString(); // Confirm name save
+            game.setScreen(new PlayGame(game));
+            }
+        });
 
         // Draw Call (Screen Elements)
         batch.begin();
@@ -146,6 +159,15 @@ public class PlayerCreator implements Screen {
         String statusMsg = isNameIncomplete() ? "Name Incomplete" : hasUnspentPoints() ? "Unspent Stat Points" : "Ready";
         font.setColor(statusMsg.equals("Ready") ? 0 : 1, statusMsg.equals("Ready") ? 1 : 0, 0, 1);
         font.draw(batch, statusMsg, 580, 390);
+
+        // Draw Play Button
+       PlayButton.render(batch);
+       PlayButton.setOnClick(() -> {
+        if (!hasUnspentPoints() && !isNameIncomplete()) {
+            Player.getInstance().name = nameBuilder.toString(); // Confirm name save
+            game.setScreen(new PlayGame(game));
+            }
+        });
 
         batch.end();
 
