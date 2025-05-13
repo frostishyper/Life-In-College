@@ -76,7 +76,7 @@ public class MenuScreen implements Screen {
         exitButton.update(delta);
 
         // Clicks
-        playButton.setOnClick(() -> {game.setScreen(new PlayerCreator(game));});
+        playButton.setOnClick(() -> {game.setScreen(new PlayGame(game));});
         exitButton.setOnClick(() -> Gdx.app.exit());
 
         // Draw Call (Screen Elements)

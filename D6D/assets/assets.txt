@@ -1,6 +1,8 @@
 Click.wav
+Data/Events.json
 Data/Items.json
 Data/SaveGame.json
+Data/Tester.json
 Data/Traits.json
 PlayerPortraits.atlas
 PlayerPortraits.png

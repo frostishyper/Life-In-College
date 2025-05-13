@@ -40,7 +40,7 @@ public class PlayerCreator implements Screen {
         uiElements.add(new UiDisplay(player, "MaleNeutralAway", 1, 1.0f, 70, 520, 120, 120, screenCamera.getViewport()));
 
         //Stat Frames
-        uiElements.add(new UiDisplay(ui, "BTN_Select", 2, 1.0f, 230, 580, 200, 70, screenCamera.getViewport()));
+        uiElements.add(new UiDisplay(ui, "BTN_Select", 1, 1.0f, 230, 580, 200, 70, screenCamera.getViewport()));
         uiElements.add(new UiDisplay(ui, "BTN_Select", 1, 1.0f, 230, 500, 200, 70, screenCamera.getViewport()));
         uiElements.add(new UiDisplay(ui, "BTN_Select", 1, 1.0f, 230, 420, 200, 70, screenCamera.getViewport()));
         uiElements.add(new UiDisplay(ui, "BTN_Select", 1, 1.0f, 230, 340, 200, 70, screenCamera.getViewport()));
