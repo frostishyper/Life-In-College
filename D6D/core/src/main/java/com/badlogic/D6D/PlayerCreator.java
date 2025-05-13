@@ -234,3 +234,14 @@ public class PlayerCreator implements Screen {
             batch.dispose();
         }
     }
+
+    // Unused Methods
+    @Override
+    public void pause() {
+        // Handle pause state if needed
+    }
+    @Override
+    public void resume() {
+        // Handle resume state if needed
+    }
+}
