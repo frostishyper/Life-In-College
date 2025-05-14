@@ -16,13 +16,15 @@ public class Player {
         // Init base stats
         for (String stat : new String[] {
                 "Intelligence", "Mental", "Constitution", "Swiftness", "Courage", "Charisma"
-        }) stats.put(stat, 2);
+        })
+            stats.put(stat, 2);
 
         recalculateDerivedStats();
     }
 
     public static Player getInstance() {
-        if (instance == null) instance = new Player();
+        if (instance == null)
+            instance = new Player();
         return instance;
     }
 
@@ -61,8 +63,10 @@ public class Player {
         baseSanity = Math.max(3, stats.get("Mental") / 2);
 
         // Set current to base if uninitialized
-        if (currentHealth == 0) currentHealth = baseHealth;
-        if (currentSanity == 0) currentSanity = baseSanity;
+        if (currentHealth == 0)
+            currentHealth = baseHealth;
+        if (currentSanity == 0)
+            currentSanity = baseSanity;
 
         clampVitals();
     }
@@ -73,10 +77,21 @@ public class Player {
     }
 
     // Getters
-    public int getBaseHealth()    { return baseHealth; }
-    public int getCurrentHealth() { return currentHealth; }
-    public int getBaseSanity()    { return baseSanity; }
-    public int getCurrentSanity() { return currentSanity; }
+    public int getBaseHealth() {
+        return baseHealth;
+    }
+
+    public int getCurrentHealth() {
+        return currentHealth;
+    }
+
+    public int getBaseSanity() {
+        return baseSanity;  
+    }
+
+    public int getCurrentSanity() {
+        return currentSanity;
+    }
 
     // Change current values (used by game events, damage, healing, etc.)
     public void modifyHealth(int delta) {

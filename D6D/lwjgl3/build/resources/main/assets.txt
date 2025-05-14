@@ -1,7 +1,13 @@
+ClassroomFrames.atlas
+ClassroomFrames.png
 Click.wav
 Data/Events.json
 Data/SaveGame.json
 Data/Tester.json
+DiceAnimation.atlas
+DiceAnimation.png
+DicenNumbers.atlas
+DicenNumbers.png
 PlayerPortraits.atlas
 PlayerPortraits.png
 Startup.ogg

@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
@@ -22,6 +23,8 @@ public class PlayGame implements Screen {
     private SpriteBatch batch;                                               // Used for drawing 2D elements
     private MonitorScreen monitorScreen;                                    // Handles animated background         (MonitorScreen.java)
     private ScreenCamera screenCamera;                                     // Encapsulates camera + viewport logic (ScreenCamera.java)       
+    private PortraitManager portraitManager;                               // Add PortraitManager instance
+    private UiDisplay portraitDisplay;                                     // UI element for the portrait
     private final Array<UiButton> uiButtons = new Array<>();              // Array to hold buttons handled by      (UiButton.java)
     private final Array<UiDisplay> uiElements = new Array<>();           // Array to hold elements handled by      (UiDisplay.java)
     private final List<StatLabel> statLabels = new ArrayList<>();       // List to hold stat labels                (StatLabel.java)
@@ -57,11 +60,15 @@ public class PlayGame implements Screen {
         TextureAtlas ui = Loader.getAtlas("Ui_Assets.atlas");
         TextureAtlas player = Loader.getAtlas("PlayerPortraits.atlas");
 
+        // Initialize PortraitManager
+        portraitManager = new PortraitManager(player);
+
         // Initialize Screen Elements
 
         // Portait With Frame and Name
         uiElements.add(new UiDisplay(ui, "Ui_Portrait_Frame", 1, 1.0f, 50, 540, 120, 120, screenCamera.getViewport()));
-        uiElements.add(new UiDisplay(player, "MaleNeutralAway", 1, 1.0f, 65, 555, 90, 90, screenCamera.getViewport()));
+        portraitDisplay = new UiDisplay(player, "MaleNeutralAway", 1, 1.0f, 65, 555, 90, 90, screenCamera.getViewport());
+        uiElements.add(portraitDisplay);
         statLabels.add(new StatLabel("PlayerName", 110, 530, screenCamera.getViewport()));
 
         // Stat Frames
@@ -162,6 +169,14 @@ public class PlayGame implements Screen {
         for (UiButton element : uiButtons) element.update(delta);
         choiceSystem.update(delta);
         
+        // Update PortraitManager based on player's health and sanity
+        Player player = Player.getInstance();
+        portraitManager.updatePortrait(player.getCurrentHealth(), player.getCurrentSanity());
+
+        // Update the portrait display with the current portrait
+        TextureRegion currentPortrait = portraitManager.getCurrentPortrait();
+        portraitDisplay.setRegion(currentPortrait);
+
         // Time Icon
         // Update Day and Time Slot Labels
         DayCycle.TimeSlot currentSlot = dayCycle.getCurrentTimeSlot();
