@@ -1,0 +1,648 @@
+[
+  {
+    "Day": "1",
+    "title": "First Day",
+    "timeSlot": "Morning",
+    "description": "Today is your first day of college. Your alarm wakes you up in time. What do you do?",
+    "choices": [
+      {
+        "text": "Take my time grooming",
+        "effect": {
+          "stats": { "Charisma": 1 },
+          "outcome": "You look at yourself in the mirror and you're looking dapper.",
+          "branch": "0"
+        }
+      },
+      {
+        "text": "Let's do some stretches",
+        "effect": {
+          "stats": { "Health": -1, "Sanity": 1 },
+          "outcome": "You feel your muscles and joints come to life!",
+          "branch": "0"
+        }
+      },
+      {
+        "text": "Talk to yourself in the mirror",
+        "effect": {
+          "stats": { "Courage": 1 },
+          "outcome": "You feel more confident in yourself!",
+          "branch": "0"
+        }
+      },
+      {
+        "text": "Do nothing special",
+        "effect": {
+          "stats": { "Mental": 1 },
+          "outcome": "You get yourself ready without doing anything special, but somehow you feel less tense.",
+          "branch": "0"
+        }
+      }
+    ]
+  },
+  {
+    "Day": "2",
+    "title": "First Day Orientation",
+    "timeSlot": "Day",
+    "description": "You and other freshmen are gathered in the auditorium for orientation. What do you do?",
+    "choices": [
+      {
+        "text": "Sit next to the smartest looking person",
+        "effect": {
+          "stats": { "Intelligence": 1 },
+          "outcome": "Smart Kid: Hey, fellow freshman! Nice to meet you!",
+          "branch": "0"
+        }
+      },
+      {
+        "text": "Sit next to the cute girl",
+        "check": {
+          "stat": "Charisma",
+          "value": 1,
+          "onPass": {
+            "stats": { "Courage": 1, "Charisma": 1 },
+            "outcome": "You and Jane hit it off and start talking.",
+            "branch": "0"
+          },
+          "onFail": {
+            "stats": { "Sanity": -1 },
+            "outcome": "The girl looks at you for a second before moving seats. You feel embarrassed but try to play it cool.",
+            "branch": "0"
+          }
+        }
+      },
+      {
+        "text": "Sit by yourself",
+        "effect": {
+          "outcome": "You sit alone through the orientation and try to make the best of it, but you feel a bit lonely.",
+          "branch": "0"
+        }
+      }
+    ]
+  },
+  {
+    "Day": "3",
+    "title": "Campus Open",
+    "timeSlot": "Day",
+    "description": "The campus is open and freshmen are allowed to explore. What do you do?",
+    "choices": [
+      {
+        "text": "Go to the library",
+        "effect": {
+          "outcome": "You make your way there, climbing the stairs and walking through the halls to reach the library.",
+          "branch": "1"
+        },
+        "branchEffect": {
+          "stats": { "Intelligence": 1 },
+          "outcome": "You find a book that interests you and spend the rest of your day reading.",
+          "branch": "0"
+        }
+      },
+      {
+        "text": "Go to the campus gym",
+        "effect": {
+          "outcome": "You make your way to the PE building. It was a bit of a walk, but you made it.",
+          "branch": "2"
+        },
+        "branchEffect": {
+          "stats": { "Constitution": 1, "Health": -1 },
+          "outcome": "You spend the rest of the day working out. You feel the pain, but there's gain.",
+          "branch": "0"
+        }
+      }
+    ]
+  },
+  {
+    "Day": "4",
+    "title": "Finally Back Home",
+    "timeSlot": "Evening",
+    "description": "You Just got back home after a long day. You feel tired but accomplished. What do you do?", 
+     "choices": [
+      {
+        "text": "Meditate",
+        "effect": {
+          "stats": { "Sanity": 1 },
+          "outcome": "You sit down and meditate for a while. You feel more relaxed.",
+          "branch": "0"
+        }
+      },
+      {
+        "text": "Go to sleep early",
+        "effect": {
+          "stats": { "Health": 1 },
+          "outcome": "You go to sleep early and get a good night's rest.",
+          "branch": "0"
+        }
+      }
+    ]
+  },      
+    
+    {
+        "Day": "25",
+    "title": "Surprise Cat",
+    "timeSlot": "Morning",
+    "description": "You woke up in the morning and decided to go for a breakfast run, but on the way there you ran into a cat. What should you do?",
+    "choices": [
+      {
+        "text": "Pet the cat",
+        "effect": {
+          "stats": { "Sanity": 1 },
+          "outcome": "You kneeled down and pet the cat, He rolled over making a little more calm.",
+          "branch": "0"
+        }
+      },
+      {
+        "text": "Rub his belly",
+        "effect": {
+          "stats": { "Health": -1 },
+          "outcome": "You Tried rub the cat's belly, But before you could get closer, he scratched your arm and ran away.",
+          "branch": "0"
+        }
+      }
+    ]
+    },
+
+       {   
+        "Day": "26",
+        "title": "Carry Request",
+        "timeSlot": "Day",
+        "description": "You we're on your way to class when suddenly a couple of strangers asked you if you could help carry their luggage. What do you do?",
+        "choices": [
+          {
+            "text": "Accept the request",
+            "check": {
+            "stat": "Strength",
+            "value": 5,
+            "onPass": {
+            "stats": { "Charisma": 1 , "Health": -1 },
+              "outcome": "You helped them carry their luggage and they were very grateful, But your muscles became sore.",
+              "branch": "0"
+              },
+              "onFail": {
+              "stats": { "Sanity": -1 , "Charisma": -1 },
+                "outcome": "You tried to help them, but you ended up dropping their luggage. They were not happy.",
+                "branch": "0"
+            }
+          }
+        },
+          {
+            "text": "Decline the request",
+            "effect": {
+              "stats": { "Charisma": -1 },
+              "outcome": "You declined their request and walked away. They looked disappointed.",
+              "branch": "0"
+            }
+          }
+        ]
+      },
+      {
+        "Day": "27",
+        "title": "Random Recitation",
+        "timeSlot": "Day",
+        "description": "You're in the classroom and your Professor suddenly called for you to recite. What do you do?",
+        "choices": [
+          {
+            "text": "Recite",
+            "check": {
+              "stat": "Intelligence",
+              "value": 3,
+              "onPass": {
+                "stats": { "Charisma": 1 , "Courage": 1 },
+                "outcome": "You recited perfectly, making your batch mates impressed increasing your reputation.",
+                "branch": "0"
+              },
+              "onFail": {
+                "stats": { "Sanity": -1 , "Charisma": -2 },
+                "outcome": "You stuttered and forgot what to say. The professor looked disappointed.",
+                "branch": "0"
+              }
+            }
+          },
+          {
+            "text": "Refuse to recite",
+            "effect": {
+              "stats": { "Charisma": -1 , "Courage": 1 },
+              "outcome": "You refused to recite. The professor looked angry, but you stood saved your face.",
+              "branch": "0"
+            }
+          }
+        ]
+      },
+      {
+        "Day": "28",
+        "title": "Evening liesure",
+        "timeSlot": "Evening",
+        "description": "After class, you decided to go straight home. But once you're home you felt bored. What do you do?",
+        "choices": [
+          {
+            "text": "Watch a movie",
+            "effect": {
+              "stats": { "Sanity": 1 },
+              "outcome": "You watched a movie and it was really entertaining. You feel relaxed.",
+              "branch": "0"
+            }
+          },
+          {
+            "text": "Play video games",
+            "effect": {
+              "stats": { "Health": -1 , "Sanity": 3 , "Intelligence": -1 },
+              "outcome": "You played video games for hours and forgot to eat. You feel tired.",
+              "branch": "0"
+            }
+          },
+          {
+            "text": "Go to sleep early",
+            "effect": {
+              "stats": { "Health": 2 },
+              "outcome": "You went to sleep early and got a good night's rest.",
+              "branch": "0"
+            }
+          },
+          {
+            "text": "Do nothing and eat snacks",
+            "effect": {
+              "stats": { "Health": 1, "Sanity": 1, "Mental": -1 , "Constitution": -1 },
+              "outcome": "You laze around doing nothing for the rest of the day, it felt wrong, but it felt so good.",
+              "branch": "0"
+            }
+          }
+        ]
+      },
+      {
+        "Day": "29",
+        "title": "Surpise Cardio",
+        "timeSlot": "Morning",
+        "description": "You got up early in the morning to go for a little run, but a wild dog got lose and started to chase you. /nWhat are you gonna do?",
+        "choices": [
+          {
+          "text": "Run away",
+          "check": {
+            "stat": "Swiftness",
+            "value": 4,
+            "onPass": {
+              "stats": { "Health": -1 , "Constitution": 1 },
+              "outcome": "You ran away from the dog and it didn't catch you. You feel a bit tired.",
+              "branch": "0"
+            },
+            "onFail": {
+              "stats": { "Health": -2 },
+              "outcome": "You tripped and fell. The dog caught up to you and bit your leg.",
+              "branch": "0"
+            }
+          }
+        },
+          {
+            "text": "Stand your ground",
+            "check": {
+              "stat": "Courage",
+              "value": 3,
+              "onPass": {
+                "stats": { "Courage": 1 , "Charisma": 1 },
+                "outcome": "You stood your ground and the dog backed off. You feel more confident.",
+                "branch": "0"
+              },
+              "onFail": {
+                "stats": { "Health": -2 },
+                "outcome": "You stood your ground, but the dog bit you. You feel scared.",
+                "branch": "0"
+              }
+            }
+          }
+        ]
+      },
+      
+      {
+        "Day": "30",
+        "title": "Unfriendly Encounter",
+        "timeSlot": "Day",
+        "description": "On your way to school your usual path was not available, out of options, you decide to take another path \n Unfortunately you encountered some not so friendly individuals. \n What Should you do?",
+        "choices": [
+           {
+        "text": "Prepare for confrontation",
+        "outcome": "You decided to stand your ground and prepare for a confrontation.",
+        "branch": "0",
+        "choices": [
+          {
+          "text": "Fight",
+          "check": {
+          "stat": "Strength",  
+          "value": 6,
+          "onPass": {
+            "stats":   { "Courage": 2 , "Charisma": 1, "Constitution": 1, "Health": -1 },
+            "outcome": "You stood your ground and Fought off the hooligans. You feel more confident.",
+            "branch": "0"
+          },
+          "onFail": {
+            "stats": { "Health": -2, "Sanity": -2, "Charisma": -2 },
+            "outcome": "You stood your ground, but the group managed to get the jump on you.",
+            "branch": "0"
+          }
+        }
+      }
+        ]
+        },
+          {
+        "text": "Avoid Trouble",
+        "outcome": "You don't want to get into trouble, so you turn around, but they refused and tried to grab you.",
+        "branch": "1",
+        "choice": [
+          {
+            "text": "Run away",
+            "check": {
+              "stat": "Swiftness",
+              "value": 5,
+              "onPass": {
+                "stats": { "Health": -1 , "Constitution": 1 },
+                "outcome": "You ran away from the hooligans and they didn't catch you. You feel a bit tired.",
+                "branch": "1"
+              },
+              "onFail": {
+                "stats": { "Health": -2 , "Sanity": -1, "Mental": -1 },
+                "outcome": "You tripped and fell. The hooligans caught up to you and beat you up.",
+                "branch": "1"
+              }
+            }
+          }
+        ]
+        }
+        ]
+      },
+
+        {
+          "Day": "31",
+          "title": "Pop Quiz",
+          "timeSlot": "Day",
+          "description": "You haggardly dragged your way to your class room, when suddenly the professor announced a sudden quiz. \nWhat do you do?",
+          "choices": [
+            {
+              "text": "Take the quiz",
+              "check": {
+                "stat": "Intelligence",
+                "value": 6,
+                "onPass": {
+                  "stats": { "Sanity": -1, "Mental": -1 , "Intelligence": 2 },
+                  "outcome": "You aced the quiz and felt proud of yourself.",
+                  "branch": "0"
+                },
+                "onFail": {
+                  "stats": { "Sanity": -2 },
+                  "outcome": "You failed the quiz and felt embarrassed.",
+                  "branch": "0"
+                }
+              }
+            },
+            {
+              "text": "Skip the quiz",
+              "check": {
+                "stat": "Charisma",
+                "value": 6,
+                "onPass": {
+                  "outcome": "You skipped the quiz and felt more confident.",
+                  "branch": "0"
+                },
+                "onFail": {
+                  "stats": { "Sanity": -2 , "Mental": -1, "Charisma": -1 },
+                  "outcome": "You skipped the quiz and felt guilty.",
+                  "branch": "0"
+                }
+              }
+            }
+          ]
+        },
+
+        {
+          "Day": "32",
+          "title": "Night at Home",
+          "timeSlot": "Evening",
+          "description": "After a long day of classes, you finally get to go home. What do you do?",
+          "choices": [
+            {
+              "text": "Relax and go to bed",
+              "effect": {
+                "stats": { "Sanity": 2, "Health": 2 },
+                "outcome": "You went home and relaxed for a while. You feel more at ease.",
+                "branch": "0"
+              }
+            },
+            {
+              "text": "Go out with friends",
+              "effect": {
+                "stats": { "Charisma": 1, "Mental": 1, "Constitution": 1, "Intelligence": -1 },
+                "outcome": "You went out with friends and had a great time.",
+                "branch": "0"
+              }
+            }
+          ] 
+        },
+        {
+          "Day": "33",
+          "title": "Morning Update",
+          "timeSlot": "Morning",
+          "description": "You woke early in the morning and watched tv as you eat breakfast, What should You do?",
+          "choices": [
+            {
+              "text": "Watch The News",
+              "effect": {
+                "stats": { "Intelligence": 1},
+                "outcome": "You watched the news and learned a lot.",
+                "branch": "0"
+              }
+            },
+            {
+              "text": "Watch cartoons",
+              "effect": {
+                "stats": { "Sanity": 1},
+                "outcome": "You watched cartoons and felt nostalgic.",
+                "branch": "0"
+              }
+            }
+          ]
+        },
+         
+        {
+          "Day": "34",
+          "title": "Study Group",
+          "timeSlot": "Day",
+          "description": "You and your friends decided to form a study group. What do you do?",
+          "choices": [
+            {
+              "text": "Study hard",
+              "effect": {
+                "stats": { "Intelligence": 2, "Sanity": -1 },
+                "outcome": "You studied hard and learned a lot.",
+                "branch": "0"
+              }
+            },
+            {
+              "text": "Goof off",
+              "effect": {
+                "stats": { "Charisma": 1, "Mental": 1 },
+                "outcome": "You and your friends goofed off and had a great time.",
+                "branch": "0"
+              }
+            }
+          ]
+        },
+
+        {
+          "Day": "35",
+          "title": "Presentation Day",
+          "timeSlot": "Day",
+          "description": "You and your groupmates have a presentation ?",
+          "choices": [
+            {
+              "text": "Present",
+              "effect": {
+                "check": {
+                  "stat": "Intelligence",
+                  "value": 3,
+                "stats": { "Intelligence": 2, "Sanity": -1 },
+                "outcome": "You presented and learned a lot.",
+                "branch": "0"
+              }
+            }
+            },
+            {
+              "text": "Goof off",
+              "effect": {
+                "stats": { "Charisma": -1, "Mental": 1 },
+                "outcome": "You and your groupmates goofed off while presenting and had a great time.",
+                "branch": "0"
+              }
+            }
+          ]
+        },
+
+        {
+          "Day": "36",
+          "title": "Karaoke Night",
+          "timeSlot": "Evening",
+          "description": "Before you went home, your classmates invited you to join them to a karaoke bar. What should you do?",
+          "choices": [
+            {
+              "text": "Celebrate with friends",
+              "effect": {
+                "stats": { "Charisma": 1, "Mental": 1, "Health": 1 },
+                "outcome": "You celebrated with friends and had a great time.",
+                "branch": "0"
+              }
+            },
+            {
+              "text": "Refuse and relax at home",
+              "effect": {
+                "stats": { "Sanity": 2, "Health": 2, "Charisma" : -1 },
+                "outcome": "You relaxed at home and felt more at ease.",
+                "branch": "0"
+              }
+            }
+          ]
+        },
+
+        {
+          "Day": "37",
+          "title": "Faulty Faucet ",
+          "timeSlot": "Morning",
+          "description": "You tried to take a morning Shower but the faucet seemed to be dry. What should you do?",
+          "choices": [
+            {
+              "text": "Try and fix it",
+              "check": {
+                "stat": "Intelligence",
+                "value": 4,
+                "onPass": {
+                  "outcome": "You succesfully fixed the shower.",
+                  "branch": "0"
+                },
+                "onFail": {
+                  "stats": { "Charisma": -1 },
+                  "outcome": "You failed to fix the shower and had to go to school unwashed..",
+                  "branch": "0"
+                }
+              }
+            }
+          ]
+        },
+
+        {
+          "Day": "38",
+          "title": "Classroom Chatter",
+          "timeSlot": "Day",
+          "description": "You and your classmates are chatting in the classroom. What do you do?",
+          "choices": [
+            {
+              "text": "Join the conversation",
+              "effect": {
+                "stats": { "Charisma": 1, "Mental": 1 },
+                "outcome": "You joined the conversation and had a great time.",
+                "branch": "0"
+              }
+            },
+            {
+              "text": "Stay quiet",
+              "effect": {
+                "stats": { "Sanity": -1 },
+                "outcome": "You stayed quiet and felt a bit lonely.",
+                "branch": "0"
+              }
+            }
+          ]
+        },
+
+        {
+          "Day": "39",
+          "title": "Faculty Visit",
+          "timeSlot": "Day",
+          "description": "You Suddenly got called to the faculty office due to a concern of plagarism on your previous work. \n What should you do?",
+          "choices": [
+            {
+              "text": "Prove that you didn't plagiarize",
+              "check": {
+                "stat": "Intelligence",
+                "value": 4,
+                "onPass": {
+                  "stats": { "Charisma": 1, "Mental": 1 },
+                  "outcome": "You proved that you didn't plagiarize and the faculty was satisfied.",
+                  "branch": "0"
+                },
+                "onFail": {
+                  "stats": { "Sanity": -2 , "Charisma": -1 },
+                  "outcome": "You failed to prove that you didn't plagiarize and the faculty was not happy.",
+                  "branch": "0"
+                }
+              }
+            },
+            {
+              "text": "Apologize",
+              "effect": {
+                "stats": { "Charisma": -1 },
+                "outcome": "You apologized and the faculty was satisfied.",
+                "branch": "0"
+              }
+            }
+          ]
+        },
+        {
+          "Day": "40",
+          "title": "Drinking Party",
+          "timeSlot": "Day",
+          "description": "Your classmates invited you to a drinking party. What do you do?",
+          "choices": [
+            {
+              "text": "Join the party",
+              "effect": {
+                "stats": { "Charisma": 1, "Mental": 1 },
+                "outcome": "You joined the party and had a great time.",
+                "branch": "0"
+              }
+            },
+            {
+              "text": "Decline the invitation",
+              "effect": {
+                "stats": { "Sanity": -1 },
+                "outcome": "You declined the invitation and felt a bit lonely.",
+                "branch": "0"
+              }
+            }
+          ]
+        }     
+]
+
