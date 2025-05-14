@@ -482,5 +482,534 @@
             }
           }
         ]
+      } , 
+      {
+    "Day": "8",
+    "title": "First Day (Late Start)",
+    "timeSlot": "Morning",
+    "description": "Today is Monday. Your alarm didn't wake you up in time. What do you do?",
+    "choices": [
+      {
+        "text": "Skip the time grooming",
+        "effect": {
+          "stats": { "Charisma": -1 },
+          "outcome": "You skipped grooming yourself so you look shaggy.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Skip doing stretches",
+        "effect": {
+          "stats": { "Health": -1 },
+          "outcome": "Your muscles and joints feel tight as you hurry up to school.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Skip the morning routine and hurry up to school",
+        "effect": {
+          "stats": { "Sanity": -1 },
+          "outcome": "You arrived early but feel off the entire day from skipping your routine.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Do nothing special",
+        "effect": {
+          "stats": { "Mental": -1 },
+          "outcome": "You get ready slowly and arrive very late to your class.",
+          "nextBranch": null
+        }
       }
+    ]
+  },
+  {
+    "Day": "8",
+    "title": "Pop Quiz",
+    "timeSlot": "Day",
+    "description": "The professor announces a surprise quiz. No one saw it coming.",
+    "choices": [
+      {
+        "text": "Review the lessons during the time remaining",
+        "effect": {
+          "stats": { "Intelligence": 1 },
+          "outcome": "Reviewing last-minute improved your chance of passing.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Relax your mind",
+        "effect": {
+          "stats": { "Sanity": 1 },
+          "outcome": "Relaxing gave you a clear headspace during the quiz.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Do nothing",
+        "effect": {
+          "outcome": "You feel uncertain as the quiz begins.",
+          "nextBranch": null
+        }
+      }
+    ]
+  },
+  {
+    "Day": "8",
+    "title": "Random Lecture Encounter",
+    "timeSlot": "Day",
+    "description": "You find yourself sitting next to a classmate you've never spoken to before. They seem like a cool person, and they're asking about your thoughts on the lecture.",
+    "choices": [
+      {
+        "text": "Start a conversation and try to make a new friend.",
+        "effect": {
+          "stats": { "Charisma": 2, "Sanity": -1},
+          "outcome": "You guys hit it off and you became friends.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Try to ignore your classmate and focus on taking notes.",
+        "effect": {
+          "stats": { "Intelligence": 1, "Charisma": -1 },
+          "outcome": "You focus on taking notes and ignored your classmates question.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "You compliment them on their neat notes",
+        "effect": {
+          "stats": { "Charisma": 2 },
+          "outcome": "Your classmate feels very happy about your compliment.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "You struggle in understanding a concept so you ask your classmate to explain a concept about the lecture.",
+        "effect": {
+          "stats": { "Intelligence": 2, "Charisma": 1 },
+          "outcome": "Your classmate to explain it to you in simpler terms..",
+          "nextBranch": null
+        }
+      }
+    ]
+  },
+  {
+    "Day": "8",
+    "title": "Strange Encounter",
+    "timeSlot": "Evening",
+    "description": "Walking home from school you hear faint footsteps behind you. You turn your head to see a hooded person standing still, just... looking in your direction. You feel a little bit afraid.",
+    "choices": [
+      {
+        "text": "Ignore the hooded person and walk a little bit faster",
+        "effect": {
+          "stats": { "Sanity": 1 },
+          "outcome": "You decide it's not worth the risk and hurry home safely.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Call out to them",
+        "check": {
+          "stat": "Charisma",
+          "value": 1,
+          "onPass": {
+            "stats": { "Courage": 1, "Charisma": 1 },
+            "outcome": "The figure hesitantly responds, 'Just walking,' then smiles and walks away.",
+            "nextBranch": null
+          },
+          "onFail": {
+            "stats": { "Sanity": -1 },
+            "outcome": "The figure doesn't respond. The silence weighs on you all the way home.",
+            "nextBranch": null
+          }
+        }
+      },
+      {
+        "text": "Challenge them to a fight",
+        "check": {
+          "stat": "Charisma",
+          "value": 1,
+          "onPass": {
+            "stats": { "Courage": 1, "Health": 1 },
+            "outcome": "You win the fight and arrive home unscathed.",
+            "nextBranch": null
+          },
+          "onFail": {
+            "stats": { "Health": -1 },
+            "outcome": "You lose the fight and arrive home with bruises.",
+            "nextBranch": null
+          }
+        }
+      }
+    ]
+  },
+  {
+    "Day": "9",
+    "title": "Bad Weather",
+    "timeSlot": "Morning",
+    "description": "Today is Tuesday. You woke up and looked out the window — it's raining heavily. You have to go to school but you remember you lost your umbrella.",
+    "choices": [
+      {
+        "text": "Wait for the rian to stop",
+        "effect": {
+          "stats": { "Sanity": -1 },
+          "outcome": "You wait for the rain to stop but you we're late to your class.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Go to shcool even without an umbrella.",
+        "effect": {
+          "stats": { "Health": -1 },
+          "outcome": "Going to school without an umrella resulted to you being wet",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Call a classmate/friend and ask if they can bring an extra umbrella",
+        "effect": {
+          "stats": { "Social": -1 },
+          "outcome": "You avoid getting wet, but feel a bit guilty about being a bother.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Use a plastic bag and improvised rain gear",
+        "effect": {
+          "stats": { "Charisma": -1 },
+          "outcome": "You get to school mostly dry, but people laugh at your 'creative' look.",
+          "nextBranch": null
+        }
+      }
+    ]
+  },
+  {
+    "Day": "9",
+    "title": "Club Recruitment Fair",
+    "timeSlot": "Day",
+    "description": "Today is a Club Recruitment Fair where clubs are looking for members. You hear that there are some shady clubs that are cult like",
+    "choices": [
+      {
+        "text": "Join PixelForge, they say the club focues on game development and game nights.",
+        "effect": {
+          "stats": { "Intelligence": 1, "Charisma": -1},
+          "outcome": "You joined PxelForge.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Join Math Society, they say the club is about learning and teaching things about math.",
+        "effect": {
+          "stats": { "Intelligence": 1, "Mental": -1 },
+          "outcome": "Going to school without an umrella resulted to you being wet",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Join FilmFrame, they say the club is about filming and photography",
+        "effect": {
+          "stats": { "Charisma": 1 },
+          "outcome": "Joining FilmFrame helped you get some aura points holding a camera.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Join the Archive, they say that the club is a library club, but no one sees them borrow books",
+        "effect": {
+          "stats": { "Sanity": -1 },
+          "outcome": "You read a book that they lend you that contains your personal information.",
+          "nextBranch": null
+        }
+      }
+    ]
+  } , 
+  {
+    "Day": "9",
+    "title": "Stray Cat Encounter",
+    "timeSlot": "Day",
+    "description": "On your way home, a stray cat blocks your path. It seems hungry but cautious.",
+    "choices": [
+      {
+        "text": "You offer it food.",
+        "effect": {
+          "stats": { "Charisma": 1, "Courage": -1, "Health": -1 },
+          "outcome": "You gave the food but you were scratch by the cat.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Back away slowly.",
+        "effect": {
+          "stats": { "Mental": -1, "Courage": -1 },
+          "outcome": "You safely backed away from the cat,",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Try to chase the cat away.",
+        "check": {
+          "stat": "Courage",
+          "value": 1,
+          "onPass": {
+            "stats": { "Courage": 1 },
+            "outcome": "You chase the cat away succesfuly.",
+            "nextBranch": null
+          },
+          "onFail": {
+            "stats": { "Health": -1 },
+            "outcome": "The cat got angry and attacked you.",
+            "nextBranch": null
+          }
+        }
+      },
+      {
+        "text": "Join the Archive, they say that the club is a library club, but no one sees them borrow books",
+        "effect": {
+          "stats": { "Sanity": -1 },
+          "outcome": "You read a book that they lend you that contains your personal information.",
+          "nextBranch": null
+        }
+      }
+    ]
+  }, 
+  {
+    "Day": "9",
+    "title": "Stray Cat Encounter",
+    "timeSlot": "Evening",
+    "description": "On your way home, a stray cat blocks your path. It seems hungry but cautious.",
+    "choices": [
+      {
+        "text": "You offer it food.",
+        "effect": {
+          "stats": { "Charisma": 1, "Courage": -1, "Health": -1 },
+          "outcome": "You gave the food but you were scratch by the cat.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Back away slowly.",
+        "effect": {
+          "stats": { "Mental": -1, "Courage": -1 },
+          "outcome": "You safely backed away from the cat,",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Try to chase the cat away.",
+        "check": {
+          "stat": "Courage",
+          "value": 1,
+          "onPass": {
+            "stats": { "Courage": 1 },
+            "outcome": "You chase the cat away succesfuly.",
+            "nextBranch": null
+          },
+          "onFail": {
+            "stats": { "Health": -1 },
+            "outcome": "The cat got angry and attacked you.",
+            "nextBranch": null
+          }
+        }
+      },
+      {
+        "text": "Join the Archive, they say that the club is a library club, but no one sees them borrow books",
+        "effect": {
+          "stats": { "Sanity": -1 },
+          "outcome": "You read a book that they lend you that contains your personal information.",
+          "nextBranch": null
+        }
+      }
+    ]
+  } , 
+  {
+    "Day": "10",
+    "title": "Morning Bus Encounter",
+    "timeSlot": "Morning",
+    "description": "You're on your morning commute to school. The bus is full, and an elderly person boards. There’s only one seat left, and you're sitting in it.",
+    "choices": [
+      {
+        "text": "Offer your seat to the elderly person.",
+        "effect": {
+          "stats": { "Charisma": 2, "Courage": 2 },
+          "outcome": "The elderly person thanks you with a warm smile. You feel proud of your decision.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Pretend to stretch and stand up casually.",
+        "effect": {
+          "stats": { "Intelligence": 1 },
+          "outcome": "You play it cool and avoid attention while doing the right thing.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Stay seated and look at your phone.",
+        "effect": {
+          "stats": { "Constitution": 1, "Charisma": -2 },
+          "outcome": "You avoid discomfort, but people nearby shoot judgmental glances your way.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Offer the seat and start a friendly conversation.",
+        "check": {
+          "stat": "Charisma",
+          "value": 5,
+          "onPass": {
+            "stats": { "Charisma": 2, "Mental": 1 },
+            "outcome": "They enjoy the conversation and share some insightful life advice.",
+            "nextBranch": null
+          },
+          "onFail": {
+            "stats": { "Charisma": -1 },
+            "outcome": "They smile politely but seem disinterested. Slightly awkward.",
+            "nextBranch": null
+          }
+        }
+      }
+    ]
+  } ,
+  {
+  "Day": "10",
+  "title": "Café Small Talk",
+  "timeSlot": "Day",
+  "description": "You stop by your usual café for a quick drink before class. The barista recognizes you and initiates small talk while preparing your order.",
+  "choices": [
+    {
+      "text": "Chat back casually about your morning.",
+      "effect": {
+        "stats": { "Charisma": 2 },
+        "outcome": "You enjoy a light conversation and leave with a smile.",
+        "nextBranch": null
+      }
+    },
+    {
+      "text": "Give a one-word answer and focus on your phone.",
+      "effect": {
+        "stats": { "Mental": 1 },
+        "outcome": "You keep things short and mentally stay in your own zone.",
+        "nextBranch": null
+      }
+    },
+    {
+      "text": "Ask the barista about their day.",
+      "check": {
+        "stat": "Charisma",
+        "value": 1,
+        "onPass": {
+          "stats": { "Charisma": 1, "Courage": 1 },
+          "outcome": "They brighten up and you have a surprisingly meaningful exchange.",
+          "nextBranch": null
+        },
+        "onFail": {
+          "stats": { "Charisma": -1 },
+          "outcome": "They respond awkwardly, and the moment passes.",
+          "nextBranch": null
+        }
+      }
+    },
+    {
+      "text": "Complain about the wait time.",
+      "effect": {
+        "stats": { "Charisma": -2, "Mental": -1 },
+        "outcome": "You get your drink faster, but the vibe is noticeably worse.",
+        "nextBranch": null
+      }
+    }
+  ]
+  } , 
+  {
+  "Day": "10",
+  "title": "Found Money",
+  "timeSlot": "Day",
+  "description": "While walking through the hallway near the vending machines, you spot a crumpled bill on the floor. No one seems to be around.",
+  "choices": [
+    {
+      "text": "Pick it up and keep it.",
+      "effect": {
+        "stats": { "Health": 1, "Courage": -1 },
+        "outcome": "You buy yourself a quick snack and move on, but part of you wonders who dropped it.",
+        "nextBranch": null
+      }
+    },
+    {
+      "text": "Ask around to see if anyone lost it.",
+      "effect": {
+        "stats": { "Charisma": 2, "Courage": 1 },
+        "outcome": "You ask a few people, and eventually someone claims it gratefully.",
+        "nextBranch": null
+      }
+    },
+    {
+      "text": "Leave it alone and walk away.",
+      "effect": {
+        "stats": { "Mental": 1 },
+        "outcome": "You choose not to get involved and continue on your day with peace of mind.",
+        "nextBranch": null
+      }
+    },
+    {
+      "text": "Pick it up and donate it to the lost-and-found box.",
+      "check": {
+        "stat": "Courage",
+        "value": 7,
+        "onPass": {
+          "stats": { "Courage": 2, "Charisma": 1 },
+          "outcome": "You feel a surprising sense of honor as you place it in the box.",
+          "nextBranch": null
+        },
+        "onFail": {
+          "stats": { "Mental": -1 },
+          "outcome": "You hesitate too long and someone else picks it up.",
+          "nextBranch": null
+        }
+      }
+    }
+  ]
+  } ,
+  {
+  "Day": "10",
+  "title": "Late Night Coding",
+  "timeSlot": "Evening",
+  "description": "You have a coding work that is needed to be done for your upcoming final project.",
+  "choices": [
+  {
+    "text": "Push through the night and code until it's done.",
+    "effect": {
+        "stats": { "Intelligence": 2, "Health": -2, "Mental": -1 },
+        "outcome": "You manage to finish a huge chunk of your project, but you're physically and mentally drained.",
+        "nextBranch": null
+      }
+    },
+    {
+      "text": "Code for an hour, then sleep early.",
+      "effect": {
+          "stats": { "Intelligence": 1, "Health": 1 },
+          "outcome": "You made some progress and felt well-rested the next day.",
+          "nextBranch": null
+        }
+    },
+    {
+      "text": "Copy some online code and hope the professor doesn't notice.",
+      "effect": {
+          "stats": { "Intelligence": 1, "Courage": -2 },
+          "outcome": "You manage to pass something, but a nagging guilt weighs on you.",
+          "nextBranch": null
+        }
+    },
+    {
+      "text": "Procrastinate and play a game instead.",
+      "effect": {
+          "stats": { "Mental": 2, "Intelligence": -2 },
+          "outcome": "You feel better mentally, but your project deadline looms like a dark cloud.",
+          "nextBranch": null
+        }
+      }
+    ]
+  }
+
+    
+
 ]
