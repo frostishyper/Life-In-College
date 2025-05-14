@@ -4,8 +4,7 @@ public class DayCycle {
     public enum TimeSlot {
         MORNING,
         DAY,
-        EVENING,
-        END_OF_DAY
+        EVENING
     }
 
     private TimeSlot currentSlot;
@@ -62,10 +61,7 @@ public class DayCycle {
                 currentSlot = TimeSlot.EVENING;
                 break;
             case EVENING:
-                currentSlot = TimeSlot.END_OF_DAY;
-                break;
-            case END_OF_DAY:
-                startNewDay(); // move to next day
+                startNewDay(); 
                 break;
         }
 
@@ -81,7 +77,6 @@ public class DayCycle {
     }
 
     public boolean isDayOver() {
-        return currentSlot == TimeSlot.END_OF_DAY;
+        return currentSlot == TimeSlot.EVENING && tick == maxTick;
     }
 }
-

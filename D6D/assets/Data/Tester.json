@@ -10,7 +10,7 @@
         "effect": {
           "stats": { "Charisma": 1 },
           "outcome": "You look at yourself in the mirror and you're looking dapper.",
-          "branch": "0"
+          "nextBranch": null
         }
       },
       {
@@ -18,7 +18,7 @@
         "effect": {
           "stats": { "Health": -1, "Sanity": 1 },
           "outcome": "You feel your muscles and joints come to life!",
-          "branch": "0"
+          "nextBranch": null
         }
       },
       {
@@ -26,7 +26,7 @@
         "effect": {
           "stats": { "Courage": 1 },
           "outcome": "You feel more confident in yourself!",
-          "branch": "0"
+          "nextBranch": null
         }
       },
       {
@@ -34,11 +34,12 @@
         "effect": {
           "stats": { "Mental": 1 },
           "outcome": "You get yourself ready without doing anything special, but somehow you feel less tense.",
-          "branch": "0"
+          "nextBranch": null
         }
       }
     ]
   },
+
   {
     "Day": "1",
     "title": "First Day Orientation",
@@ -50,7 +51,7 @@
         "effect": {
           "stats": { "Intelligence": 1 },
           "outcome": "Smart Kid: Hey, fellow freshman! Nice to meet you!",
-          "branch": "0"
+          "nextBranch": null
         }
       },
       {
@@ -61,12 +62,12 @@
           "onPass": {
             "stats": { "Courage": 1, "Charisma": 1 },
             "outcome": "You and Jane hit it off and start talking.",
-            "branch": "0"
+            "nextBranch": null
           },
           "onFail": {
             "stats": { "Sanity": -1 },
             "outcome": "The girl looks at you for a second before moving seats. You feel embarrassed but try to play it cool.",
-            "branch": "0"
+            "nextBranch": null
           }
         }
       },
@@ -74,11 +75,12 @@
         "text": "Sit by yourself",
         "effect": {
           "outcome": "You sit alone through the orientation and try to make the best of it, but you feel a bit lonely.",
-          "branch": "0"
+          "nextBranch": null
         }
       }
     ]
   },
+
   {
     "Day": "1",
     "title": "Campus Open",
@@ -86,31 +88,41 @@
     "description": "The campus is open and freshmen are allowed to explore. What do you do?",
     "choices": [
       {
-        "text": "Go to the library",
+        "text": "Take A Walk Through The Campus Gardens",
         "effect": {
-          "outcome": "You make your way there, climbing the stairs and walking through the halls to reach the library.",
-          "branch": "1"
-        },
-        "branchEffect": {
-          "stats": { "Intelligence": 1 },
-          "outcome": "You find a book that interests you and spend the rest of your day reading.",
-          "branch": "0"
+          "stats": { "Sanity": 1 },
+          "outcome": "You take a walk through the campus gardens and enjoy the fresh air., the flowers are blooming and the trees are green.",
+          "nextBranch": null
         }
       },
       {
-        "text": "Go to the campus gym",
+        "text": "Go to the library",
         "effect": {
-          "outcome": "You make your way to the PE building. It was a bit of a walk, but you made it.",
-          "branch": "2"
-        },
-        "branchEffect": {
-          "stats": { "Constitution": 1, "Health": -1 },
-          "outcome": "You spend the rest of the day working out. You feel the pain, but there's gain.",
-          "branch": "0"
+          "stats": { "Intelligence": 1 },
+          "outcome": "You go to the library and read some interesting books.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Try And Socialize With Other Freshmen",
+        "effect": {
+          "stats": {"Courage": 1, "Charisma": 1 },
+          "outcome": "Some Of Them Are Actually Nice! You make some new friends.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Go to the gym",
+        "effect": {
+          "stats": { "Health": -1, "Constitution": 1 },
+          "outcome": "You go to the gym and work out for a bit.",
+          "nextBranch": null
         }
       }
+      
     ]
   },
+  
   {
     "Day": "1",
     "title": "Finally Back Home",
@@ -122,7 +134,7 @@
         "effect": {
           "stats": { "Sanity": 1 },
           "outcome": "You sit down and meditate for a while. You feel more relaxed.",
-          "branch": "0"
+          "nextBranch": null
         }
       },
       {
@@ -130,9 +142,367 @@
         "effect": {
           "stats": { "Health": 1 },
           "outcome": "You go to sleep early and get a good night's rest.",
-          "branch": "0"
+          "nextBranch": null
+        }
+      }
+    ]
+  },
+
+  {
+    "Day": "2",
+    "title": "First Day of Classes",
+    "timeSlot": "Morning",
+    "description": "You wake up ealy and realize it's the first day of official classes. What do you do?",
+    "choices": [
+      {
+        "text": "Go to class early",
+        "effect": {
+          "stats": { "Intelligence": 1 },
+          "outcome": "You arrive at class early and get a good seat.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Sleep in a bit more",
+        "effect": {
+          "stats": { "Health": 1, "Intelligence": -1 },
+          "outcome": "You sleep in a bit more, but you feel a bit groggy.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Jog to class",
+        "effect": {
+          "stats": { "Swiftness": 1 },
+          "outcome": "You jog to class and feel more awake and agile.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Eat a big breakfast",
+        "effect": {
+          "stats": { "Health": 1 },
+          "outcome": "You eat a big breakfast and feel energized.",
+          "nextBranch": null
+        }
+      }
+    ]
+  },
+
+  {
+    "Day": "2",
+    "title": "First Class",
+    "timeSlot": "Day",
+    "description": "You enter your first class and see a lot of new faces. What do you do?",
+    "choices": [
+      {
+        "text": "Sit in the front row",
+        "effect": {
+          "stats": { "Mental": 1 },
+          "outcome": "You sit in the front row and pay attention to the lecture, it was a bit boring but bearable.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Sit in the back row",
+        "effect": {
+          "stats": { "Charisma": 1 },
+          "outcome": "You Socialized with some classmates in the back row, where you were away from the intructors view.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Take notes",
+        "effect": {
+          "stats": { "Intelligence": 1 },
+          "outcome": "You take notes during the lecture and feel more prepared for the class.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Daydream",
+        "effect": {
+          "stats": { "Sanity": 1 },
+          "outcome": "You daydream during the lecture and spaced out.",
+          "nextBranch": null
+        }
+      }
+    ]
+  },
+
+  {
+    "Day": "2",
+    "title": "Lunch Time",
+    "timeSlot": "Day",
+    "description": "It's lunchtime and you have some free time. What do you do?",
+    "choices": [
+      {
+        "text": "Eat lunch with blockmates",
+        "effect": {
+          "stats": { "Charisma": 1 },
+          "outcome": "You eat lunch with your blockmates and have a great time.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Eat lunch alone",
+        "effect": {
+          "stats": { "Sanity": -1 },
+          "outcome": "You eat lunch alone and feel a bit lonely.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Scroll through social media",
+        "effect": {
+          "stats": { "Mental": 1 },
+          "outcome": "You scroll through social media and catch up with the online world.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Take a nap",
+        "effect": {
+          "stats": { "Health": 1 },
+          "outcome": "You take a nap during lunch and feel more refreshed.",
+          "nextBranch": null
+        }
+      }
+    ]
+  },
+
+  {
+    "Day": "2",
+    "title": "After Class",
+    "timeSlot": "Evening",
+    "description": "After class, you have some free time. What do you do?",
+    "choices": [
+      {
+        "text": "Drop by the Gym",
+        "effect": {
+          "stats": { "Constitution": 1, "Health": -1 },
+          "outcome": "You drop by the gym and work out for a bit.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Approach Jane Who You Saw Yesterday",
+        "check": {
+          "stat": "Charisma",
+          "value": 2,
+          "onPass": {
+            "stats": { "Courage": 1, "Charisma": 1 },
+            "outcome": "You Two grab a coffee and talk about your classes. You feel more confident in yourself!",
+            "nextBranch": null
+          },
+          "onFail": {
+            "stats": { "Sanity": -1 },
+            "outcome": "Jane gives you a flimsy excuse to leave. You feel embarrassed but theres no helping it.",
+            "nextBranch": null
+          }
+        }
+      },
+      {
+        "text": "Go And Gamble In The Shady Alley",
+        "check": {
+          "stat": "Courage",
+          "value": 3,
+          "onPass": {
+            "stats": { "Sanity": 3, "Mental": 3 },
+            "outcome": "You Played Them Like A Fiddle! You won a lot of money and feel like a genius.",
+            "nextBranch": null
+          },
+          "onFail": {
+            "stats": { "Health": -5 },
+            "outcome": "The Other Gamblers Sensed blood In The Water. After A While They Took Out Knives And Stabbed You.",
+            "nextBranch": null
+          }
+        }
+      },
+      {
+        "text": "Go home",
+        "effect": {
+          "stats": { "Health": 1 },
+          "outcome": "You go home and relax for the rest of the Evening.",
+          "nextBranch": null
+        }
+      }
+    ]
+  },
+
+  {
+    "Day": "3",
+    "title": "Day Off From Classes",
+    "timeSlot": "Morning",
+    "description": "No Classes Today So You Can Take It Easy. What Do You Do?",
+    "choices": [
+      {
+        "text": "Sleep In",
+        "effect": {
+          "stats": { "Health": 1, "Sanity": 1 },
+          "outcome": "You sleep in and feel more rested.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Go For A Jog",
+        "effect": {
+          "stats": { "Swiftness": 1 },
+          "outcome": "You go for a jog and feel more agile.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Make A Healthy Breakfast",
+        "effect": {
+          "stats": { "Constitution": 1 },
+          "outcome": "You make a healthy breakfast made of eggs and fresh fruits. Of Coruse with a glass of milk.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Lay in Bed And Scroll Through Social Media",
+        "effect": {
+          "stats": { "Mental": -1 },
+          "outcome": "You feel your brain rot as you scroll through social media.",
+          "nextBranch": null
+        }
+      }
+    ]
+  },
+
+  {
+    "Day": "3",
+    "title": "Afternoon Free Time",
+    "timeSlot": "Day",
+    "description": "You have some free time. What do you do?",
+    "choices": [
+      {
+        "text": "Open Strava and Go For A Run",
+        "effect": {
+          "stats": { "Swiftness": 1 , "Health": -1 },
+          "outcome": "You open Strava on your phone to track your run. You run for kilometers and feel great but exhausted.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Hop On The Computer And Play Some Games",
+        "effect": {
+          "stats": { "Sanity": 1, "Health": -1 },
+          "outcome": "Its was fun playing and you loose track of time. You feel a bit tired but happy.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Turn On the Speaker And Play Some Music",
+        "effect": {
+          "stats": { "Charisma": 1, "Courage": 1 },
+          "outcome": "You Sing Your Heart Out In The Comfort Of Your Own Home, And Feel More Confident In Yourself.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Try And Message Jane",
+        "check": {
+          "stat": "Charisma",
+          "value": 2,
+          "onPass": {
+            "stats": { "Sanity": 2},
+            "outcome": "She Eagerly Replies To Your Messages And You Two Go On A Long Back And Forth Conversation.",
+            "nextBranch": null
+          },
+          "onFail": {
+            "stats": { "Sanity": -2 },
+            "outcome": "She Leaves You On Read. You Feel Embarrassed And A Bit Sad.",
+            "nextBranch": null
+          }
+        }
+      }
+    ]
+  },
+
+  {
+    "Day": "3",
+    "title": "Mid Day Free Time",
+    "timeSlot": "Day",
+    "description": "You have some more free time. What do you do?",
+    "choices": [
+      {
+        "text": "Go to the gym",
+        "effect": {
+          "stats": { "Constitution": 1, "Health": -1 },
+          "outcome": "You go to the gym and work out for a bit.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Binge Some Series On Netflix",
+        "effect": {
+          "stats": { "Health": -1, "Sanity": 1 },
+          "outcome": "It Was Entertaining But You Feel A But You Were Sedebtary For Too Long.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Clean Up Your Room",
+        "effect": {
+          "stats": { "Mental": 1 },
+          "outcome": "You clean up your room and feel more organized and productive.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Do Nothing",
+        "effect": {
+          "stats": {},
+          "outcome": "You Sit And Do Absolutely Nothing. You Feel A Bit Bored But Relaxed.",
+          "nextBranch": null
+        }
+      }
+    ]
+  },
+
+  {
+    "Day": "3",
+    "title": "Evening Free Time",
+    "timeSlot": "Evening",
+    "description": "You Have School Tomorrow So You Should Probably Get Some Rest. What Do You Do?",
+    "choices": [
+      {
+        "text": "Sleep Early",
+        "effect": {
+          "stats": { "Constitution": 1, "Health": 1 },
+          "outcome": "You Hit The Hay Early And Get A Good Night's Rest.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Do Your Backlog Of Housekeeping",
+        "effect": {
+          "stats": { "Mental": -1 },
+          "outcome": "You Do Your Backlog Of Housekeeping And Feel A Bit Drained But Accomplished.",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Stare At The Ceiling",
+        "effect": {
+          "stats": { "Mental": -1 },
+          "outcome": "You Zone Out And Stare At The Ceiling For A While, You Loose Track Of Time",
+          "nextBranch": null
+        }
+      },
+      {
+        "text": "Stay Up Late And Scroll Through Social Media",
+        "effect": {
+          "stats": { "Health": -1},
+          "outcome": "You sleep really late and your incurred a bit of sleep debt.",
+          "nextBranch": null
         }
       }
     ]
   }
+
+
+
 ]
