@@ -2,6 +2,7 @@ package com.badlogic.D6D;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 // Import Statements
@@ -29,14 +30,15 @@ public class PlayGame implements Screen {
     private DayCycle.TimeSlot lastTimeSlot;                          // Last time slot to check for changes        (DayCycle.java)                   
     private StatLabel dayLabel;                                     // Label for current day                       (StatLabel.java) 
     private StatLabel timeSlotLabel;                               // Label for current time of day                (StatLabel.java)
-    private ScenarioEngine scenarioEngine;
-    private GlyphLayout titleLayout;
-    private GlyphLayout descriptionLayout;
-    private BitmapFont dialogueFont;
-    private String scenarioTitle;
-    private String scenarioDescription;
-
-    
+    private ScenarioEngine scenarioEngine;                        // Scenario engine to manage scenarios           (ScenarioEngine.java)  
+    private ChoiceSystem choiceSystem;                           // System to handle player choices                (ChoiceSystem.java)
+    private GlyphLayout titleLayout;                            // Layout for scenario title text                  
+    private GlyphLayout descriptionLayout;                     // Layout for scenario description text             
+    private GlyphLayout outcomeLayout;                        // Layout for scenario outcome text                 
+    private GlyphLayout statChangeLayout;                    // New layout for stat changes 
+    private BitmapFont dialogueFont;                        // Font for rendering text
+    private String scenarioTitle;                          // Title of the current scenario                         (ScenarioEngine.java)
+    private String scenarioDescription;                   // Description of the current scenario                     (ScenarioEngine.java)
 
     // Constructor for PlayGame screen
     public PlayGame(MainGame game) {
@@ -85,19 +87,29 @@ public class PlayGame implements Screen {
         // Dialogue Box
         uiElements.add(new UiDisplay(ui, "Ui_Window_Horizontal", 1, 1.0f, 320, 300, 700, 350, screenCamera.getViewport()));
 
-        // Intialize Scenario Text
+        // Initialize DayCycle
+        dayCycle = new DayCycle();
+        lastTimeSlot = dayCycle.getCurrentTimeSlot();
+        
+        // Initialize Scenario Engine
         scenarioEngine = new ScenarioEngine();
+        scenarioEngine.setDayCycle(dayCycle);
+        
+        // Initialize Choice System
+        choiceSystem = new ChoiceSystem(ui, screenCamera.getViewport(), scenarioEngine, dayCycle);
+        choiceSystem.generateChoiceButtons();
+        
+        // Initialize Scenario Text
         dialogueFont = new BitmapFont();
         dialogueFont.getData().setScale(1.1f);
         titleLayout = new GlyphLayout();
         descriptionLayout = new GlyphLayout();
-        scenarioTitle = scenarioEngine.getTitle();
-        scenarioDescription = scenarioEngine.getDescription();
-        updateScenarioLayout();
+        outcomeLayout = new GlyphLayout();
+        statChangeLayout = new GlyphLayout(); // Initialize stat change layout
+        
+        updateScenarioText();
 
         // Time Icon
-        dayCycle = new DayCycle();
-        lastTimeSlot = dayCycle.getCurrentTimeSlot();
         timeIcon = new UiDisplay(ui, getRegionNameForSlot(lastTimeSlot), 1, 1.0f, 1160, 570, 60, 60, screenCamera.getViewport());
         uiElements.add(timeIcon);
 
@@ -125,8 +137,6 @@ public class PlayGame implements Screen {
         // Health and Sanity value labels
         statLabels.add(new StatLabel("Health", 260, 625, screenCamera.getViewport()));
         statLabels.add(new StatLabel("Sanity", 260, 565, screenCamera.getViewport()));
-
-
     }
 
     @Override
@@ -135,7 +145,7 @@ public class PlayGame implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Initialize time aand day labels
+        // Initialize time and day labels
         timeSlotLabel.setText(lastTimeSlot.name().charAt(0) + lastTimeSlot.name().substring(1).toLowerCase() + " :");
         dayLabel.setText("Day " + dayCycle.getCurrentDay());
 
@@ -143,19 +153,26 @@ public class PlayGame implements Screen {
         monitorScreen.update(delta);
         for (UiDisplay element : uiElements) element.update(delta);
         for (UiButton element : uiButtons) element.update(delta);
-
+        choiceSystem.update(delta);
         
         // Time Icon
         // Update Day and Time Slot Labels
         DayCycle.TimeSlot currentSlot = dayCycle.getCurrentTimeSlot();
         if (currentSlot != lastTimeSlot) {
-        timeIcon.setRegion(getRegionNameForSlot(currentSlot));  // Update icon
-        lastTimeSlot = currentSlot;
+            timeIcon.setRegion(getRegionNameForSlot(currentSlot));  // Update icon
+            lastTimeSlot = currentSlot;
 
-        // Update time slot text and day number
-        timeSlotLabel.setText(currentSlot.name().charAt(0) + currentSlot.name().substring(1).toLowerCase() + " :");
-        dayLabel.setText("Day " + dayCycle.getCurrentDay());
-}
+            // Update time slot text and day number
+            timeSlotLabel.setText(currentSlot.name().charAt(0) + currentSlot.name().substring(1).toLowerCase() + " :");
+            dayLabel.setText("Day " + dayCycle.getCurrentDay());
+            
+            // Find appropriate scenario for new time slot
+            if (currentSlot != DayCycle.TimeSlot.END_OF_DAY) {
+                scenarioEngine.findNextScenario();
+                updateScenarioText();
+                choiceSystem.generateChoiceButtons();
+            }
+        }
 
         // Exit Button
         uiButtons.get(0).setOnClick(() -> {
@@ -169,6 +186,7 @@ public class PlayGame implements Screen {
         for (UiButton element : uiButtons) element.render(batch);
         for (StatLabel label : statLabels) label.render(batch);
         scenarioTextRender(batch);
+        choiceSystem.render(batch);
         batch.end();
     }
 
@@ -177,22 +195,64 @@ public class PlayGame implements Screen {
         // Ensure viewport scales correctly when screen size changes
         screenCamera.resize(width, height);
     }
-
-    @Override
-    public void hide() {
-        // Dispose of resources if needed
+    
+    // Update the scenario text based on current state
+    private void updateScenarioText() {
+        scenarioTitle = scenarioEngine.getTitle();
+        scenarioDescription = scenarioEngine.getDescription();
+        
+        titleLayout.setText(dialogueFont, scenarioTitle);
+        descriptionLayout.setText(dialogueFont, scenarioDescription, Color.WHITE, 660, Align.left, true);
+        
+        // Set outcome text if showing an outcome
+        if (choiceSystem.isShowingOutcome()) {
+            String outcomeText = choiceSystem.getOutcomeText();
+            outcomeLayout.setText(dialogueFont, outcomeText, Color.GREEN, 660, Align.left, true);
+        }
     }
 
-    @Override
-    public void dispose() {
-        // Release resources when screen is disposed
-        if (batch != null) {
-            batch.dispose();
+    // Render scenario text
+    private void scenarioTextRender(SpriteBatch batch) {
+        float dialogueX = 350;
+        float dialogueY = 600;
+
+        dialogueFont.draw(batch, titleLayout, dialogueX, dialogueY);
+        
+        // Draw outcome or description
+        if (choiceSystem.isShowingOutcome()) {
+            // Get the original outcome text without stat changes
+            String outcomeOnly = choiceSystem.getOutcomeText().split("\n")[0];
+            outcomeLayout.setText(dialogueFont, outcomeOnly, Color.WHITE, 660, Align.left, true);
+            dialogueFont.draw(batch, outcomeLayout, dialogueX, dialogueY - 40);
+            
+            // Render stat changes with colors
+            Map<String, Integer> statChanges = choiceSystem.getStatChanges();
+            if (!statChanges.isEmpty()) {
+                float statChangeY = dialogueY - 40 - outcomeLayout.height - 20;
+                
+                for (Map.Entry<String, Integer> entry : statChanges.entrySet()) {
+                    String statName = entry.getKey();
+                    int change = entry.getValue();
+                    
+                    Color color = change > 0 ? Color.GREEN : Color.RED;
+                    String changeText = (change > 0 ? "+" : "") + change + " " + statName;
+                    
+                    statChangeLayout.setText(dialogueFont, changeText, color, 660, Align.left, false);
+                    dialogueFont.setColor(color);
+                    dialogueFont.draw(batch, statChangeLayout, dialogueX, statChangeY);
+                    statChangeY -= 25; // Move down for next stat change
+                }
+                
+                // Reset font color to white
+                dialogueFont.setColor(Color.WHITE);
+            }
+        } else {
+            dialogueFont.draw(batch, descriptionLayout, dialogueX, dialogueY - 40);
         }
     }
 
     // Helper Method
-        private String getRegionNameForSlot(DayCycle.TimeSlot slot) {
+    private String getRegionNameForSlot(DayCycle.TimeSlot slot) {
         switch (slot) {
             case MORNING: return "Ui_Morning";
             case DAY: return "Ui_Day";
@@ -201,22 +261,18 @@ public class PlayGame implements Screen {
         }
     }
 
-    // Helper Method For Scenario Text
-    private void updateScenarioLayout() {
-    titleLayout.setText(dialogueFont, scenarioTitle);
-    descriptionLayout.setText(dialogueFont, scenarioDescription, Color.WHITE, 660, Align.left, true);
+    @Override public void hide() {}     // Not used but required by Screen interface
+    @Override public void pause() {}    // Not used but required by Screen interface
+    @Override public void resume() {}   // Not used but required by Screen interface
+    
+    @Override
+    public void dispose() {
+        // Release resources when screen is disposed
+        if (batch != null) {
+            batch.dispose();
+        }
+        if (dialogueFont != null) {
+            dialogueFont.dispose();
+        }
     }
-
-    private void scenarioTextRender(SpriteBatch batch) {
-    float dialogueX = 350;
-    float dialogueY = 600;
-
-    dialogueFont.draw(batch, titleLayout, dialogueX, dialogueY);
-    dialogueFont.draw(batch, descriptionLayout, dialogueX, dialogueY - 40);
-    }
-
-
-    // Unused methods
-    @Override public void pause() {}     // Not used but required by Screen interface
-    @Override public void resume() {}    // Not used but required by Screen interface
 }

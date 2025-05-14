@@ -1,94 +1,107 @@
 package com.badlogic.D6D;
 
-// Import Statements
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class UiDisplay {
-
-    // Local Variables
-    private final Rectangle bounds;
-    private final Viewport viewport;
-    private final Animation<TextureRegion> animation;
-    private TextureRegion staticFrame; // Mutable for setRegion() changes
-    private final boolean isAnimated;
-
-    private float stateTime = 0f;
-
-    // Constructor: Handles both static and animated displays
-    // Display Elements Only (No Clicks)
-    public UiDisplay(TextureAtlas atlas, String regionName, int frameCount, float totalTime,
-                     float x, float y, float width, float height, Viewport viewport) {
-
-        Array<TextureRegion> frames = new Array<>();
-        if (frameCount == 1) {
-            TextureRegion frame = atlas.findRegion(regionName); // No index for single frame
-            if (frame != null) {
-                frames.add(frame);
-            }
-        } else {
-            for (int i = 1; i <= frameCount; i++) {
-                TextureRegion frame = atlas.findRegion(regionName, i);
-                if (frame != null) {
-                    frames.add(frame);
-                }
-            }
-        }
-
-        this.bounds = new Rectangle(x, y, width, height);
+    public class UiDisplay {
+    private Animation<TextureRegion> animation;
+    private float stateTime = 0;
+    private float x, y, width, height;
+    private float scaleX = 1.0f, scaleY = 1.0f;
+    private String currentRegionName;
+    private TextureAtlas atlas;
+    private Viewport viewport;
+    
+    public UiDisplay(TextureAtlas atlas, String regionName, int animationFrames, 
+                    float animationSpeed, float x, float y, float width, float height, 
+                    Viewport viewport) {
+        
+        this.atlas = atlas;
+        this.currentRegionName = regionName;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
         this.viewport = viewport;
-
-        if (frames.size > 1) {
-            this.isAnimated = true;
-            this.animation = new Animation<>(totalTime / (frameCount - 1), frames, Animation.PlayMode.LOOP);
-            this.staticFrame = null;
-        } else {
-            this.isAnimated = false;
-            this.animation = null;
-            this.staticFrame = frames.size > 0 ? frames.get(0) : null;
-        }
+        
+        // Create animation from atlas regions
+        createAnimation(regionName, animationFrames, animationSpeed);
     }
-
-    // Update Animation Frame (Only if Animated)
-    public void update(float delta) {
-        if (isAnimated) {
-            stateTime += delta;
-        }
-    }
-
-    // Render Call — Draws Static or Animated Frame
-    public void render(SpriteBatch batch) {
-        if (isAnimated && animation != null) {
-            TextureRegion frame = animation.getKeyFrame(stateTime);
-            batch.draw(frame, bounds.x, bounds.y, bounds.width, bounds.height);
-        } else if (staticFrame != null) {
-            batch.draw(staticFrame, bounds.x, bounds.y, bounds.width, bounds.height);
-        }
-    }
-
-    // Allows changing the visual region (Only for Static Displays)
-    public void setRegion(String regionName) {
-        if (!isAnimated) {
-            TextureAtlas atlas = Loader.getAtlas("Ui_Assets.atlas");
-            TextureRegion newRegion = atlas.findRegion(regionName);
-            if (newRegion != null) {
-                this.staticFrame = newRegion;
+    
+    // create animation from atlas
+    private void createAnimation(String regionName, int frameCount, float animationSpeed) {
+        if (atlas == null) return;
+        
+        // If only one frame, use it directly
+        if (frameCount <= 1) {
+            TextureRegion region = atlas.findRegion(regionName);
+            if (region != null) {
+                Array<TextureRegion> frames = new Array<>(1);
+                frames.add(region);
+                animation = new Animation<>(animationSpeed, frames, Animation.PlayMode.LOOP);
+            }
+        } 
+        // Otherwise try to find multiple frames from the atlas
+        else {
+            Array<TextureAtlas.AtlasRegion> regions = atlas.findRegions(regionName);
+            if (regions != null && regions.size > 0) {
+                animation = new Animation<>(animationSpeed, regions, Animation.PlayMode.LOOP);
             }
         }
     }
-
-    // README (Use Case Example)
-    //
-    // In Local Variable
-    // private UiDisplay mainTitle;
-    //
-    // In show()
-    // mainTitle = new UiDisplay(atlas, "Ui_MainTitle", 4, 1.0f, 220, 300, 800,
-    //                            300, screenCamera.getViewport());
-    //
-    // In render()
-    // mainTitle.update(delta);
-    // mainTitle.render(batch); // In Draw Call/Batch
+    
+    // update the animation state time
+    public void update(float delta) {
+        stateTime += delta;
+    }
+    
+   // Renders current frame of the animation
+    public void render(SpriteBatch batch) {
+        if (animation == null) return;
+        
+        TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
+        
+        if (currentFrame != null) {
+            batch.draw(
+                currentFrame,
+                x, y,                       // Position
+                width / 2, height / 2,      // Origin (center)
+                width, height,              // Size
+                scaleX, scaleY,             // Scale
+                0                           // Rotation
+            );
+        }
+    }
+    
+   // texture Region Update
+    public void setRegion(String regionName) {
+        if (regionName.equals(currentRegionName)) return;
+        
+        currentRegionName = regionName;
+        createAnimation(regionName, 1, 0.1f);
+    }
+    
+    // Scale Display
+    public void setScale(float scaleX, float scaleY) {
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
+    }
+    
+    // Getters
+    public float getX() { return x; }
+    public float getY() { return y; }
+    public float getWidth() { return width; }
+    public float getHeight() { return height; }
+    public float getScaleX() { return scaleX; }
+    public float getScaleY() { return scaleY; }
+    public Viewport getViewport() { return viewport; }
+    
+    
+    public void dispose() {
+        // Animation doesn't need explicit disposal as it uses regions from the atlas
+    }
 }
