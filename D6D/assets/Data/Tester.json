@@ -1,35 +1,138 @@
 [
-    {
-        "id": "01",
-        "Event Title": "First Day",
-        "TimeSlot": "Morning",
-        "Happening": "Today Is Your First Day Of College, Your Alarm Wakes You Up In Time. What Do You Do?",
-
-        "Choice1": "Take My Time Grooming",
-        "effect1": {
-            "Charisma": 1, 
-            "Outcome": "You Look Yourself And The Mirror And Your Looking Dapper",
-            "Branch": "No"
-        },
-
-        "Choice2": "Lets Do Some Streches",
-        "effect2": {
-            "Health": -1,
-            "Sanity": 1,
-            "Outcome": "You Feel Your Muscles And Joints Come To Life!!"
-        },
-
-        "Choice3": "Talk To Yourself In The Mirror",
-        "effect3": {
-            "Courage": 1,
-            "Outcome": "You Feel More Conifent In Yourself!!"
-        },
-
-        "Choice4": "Do Nothing Special",
-        "effect4": {
-            "Mental": 1,
-            "Outcome": "You Get Yourself Ready Without Doing Anything Special, But Somehow You Feel Less Tense",
-            "Branch": "No"
+  {
+    "Day": "1",
+    "title": "First Day",
+    "timeSlot": "Morning",
+    "description": "Today is your first day of college. Your alarm wakes you up in time. What do you do?",
+    "choices": [
+      {
+        "text": "Take my time grooming",
+        "effect": {
+          "stats": { "Charisma": 1 },
+          "outcome": "You look at yourself in the mirror and you're looking dapper.",
+          "branch": "0"
         }
-    }
+      },
+      {
+        "text": "Let's do some stretches",
+        "effect": {
+          "stats": { "Health": -1, "Sanity": 1 },
+          "outcome": "You feel your muscles and joints come to life!",
+          "branch": "0"
+        }
+      },
+      {
+        "text": "Talk to yourself in the mirror",
+        "effect": {
+          "stats": { "Courage": 1 },
+          "outcome": "You feel more confident in yourself!",
+          "branch": "0"
+        }
+      },
+      {
+        "text": "Do nothing special",
+        "effect": {
+          "stats": { "Mental": 1 },
+          "outcome": "You get yourself ready without doing anything special, but somehow you feel less tense.",
+          "branch": "0"
+        }
+      }
+    ]
+  },
+  {
+    "Day": "1",
+    "title": "First Day Orientation",
+    "timeSlot": "Day",
+    "description": "You and other freshmen are gathered in the auditorium for orientation. What do you do?",
+    "choices": [
+      {
+        "text": "Sit next to the smartest looking person",
+        "effect": {
+          "stats": { "Intelligence": 1 },
+          "outcome": "Smart Kid: Hey, fellow freshman! Nice to meet you!",
+          "branch": "0"
+        }
+      },
+      {
+        "text": "Sit next to the cute girl",
+        "check": {
+          "stat": "Charisma",
+          "value": 1,
+          "onPass": {
+            "stats": { "Courage": 1, "Charisma": 1 },
+            "outcome": "You and Jane hit it off and start talking.",
+            "branch": "0"
+          },
+          "onFail": {
+            "stats": { "Sanity": -1 },
+            "outcome": "The girl looks at you for a second before moving seats. You feel embarrassed but try to play it cool.",
+            "branch": "0"
+          }
+        }
+      },
+      {
+        "text": "Sit by yourself",
+        "effect": {
+          "outcome": "You sit alone through the orientation and try to make the best of it, but you feel a bit lonely.",
+          "branch": "0"
+        }
+      }
+    ]
+  },
+  {
+    "Day": "1",
+    "title": "Campus Open",
+    "timeSlot": "Day",
+    "description": "The campus is open and freshmen are allowed to explore. What do you do?",
+    "choices": [
+      {
+        "text": "Go to the library",
+        "effect": {
+          "outcome": "You make your way there, climbing the stairs and walking through the halls to reach the library.",
+          "branch": "1"
+        },
+        "branchEffect": {
+          "stats": { "Intelligence": 1 },
+          "outcome": "You find a book that interests you and spend the rest of your day reading.",
+          "branch": "0"
+        }
+      },
+      {
+        "text": "Go to the campus gym",
+        "effect": {
+          "outcome": "You make your way to the PE building. It was a bit of a walk, but you made it.",
+          "branch": "2"
+        },
+        "branchEffect": {
+          "stats": { "Constitution": 1, "Health": -1 },
+          "outcome": "You spend the rest of the day working out. You feel the pain, but there's gain.",
+          "branch": "0"
+        }
+      }
+    ]
+  },
+  {
+    "Day": "1",
+    "title": "Finally Back Home",
+    "timeSlot": "Evening",
+    "description": "After being out all day, you finally get back home. You eat dinner but now have some free time. What do you do?",
+    "choices": [
+      {
+        "text": "Meditate",
+        "effect": {
+          "stats": { "Sanity": 1 },
+          "outcome": "You sit down and meditate for a while. You feel more relaxed.",
+          "branch": "0"
+        }
+      },
+      {
+        "text": "Go to sleep early",
+        "effect": {
+          "stats": { "Health": 1 },
+          "outcome": "You go to sleep early and get a good night's rest.",
+          "branch": "0"
+        }
+      }
+    ]
+  }
 ]
