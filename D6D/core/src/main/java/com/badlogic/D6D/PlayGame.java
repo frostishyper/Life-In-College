@@ -148,6 +148,13 @@ public class PlayGame implements Screen {
 
     @Override
     public void render(float delta) {
+        // Check if player has died or gone insane
+        GameOverScreen gameOverScreen = GameOverScreen.checkPlayerStatus(game);
+        if (gameOverScreen != null) {
+            game.setScreen(gameOverScreen);
+            return; // Exit render method early
+        }
+        
         // Clear screen with black background
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -182,11 +189,11 @@ public class PlayGame implements Screen {
             dayLabel.setText("Day " + dayCycle.getCurrentDay());
             
             // Find appropriate scenario for new time slot
-            if (currentSlot != DayCycle.TimeSlot.END_OF_DAY) {
-                scenarioEngine.findNextScenario();
-                updateScenarioText();
-                choiceSystem.generateChoiceButtons();
-            }
+            // Note: No need to check for END_OF_DAY anymore as it doesn't exist
+            // The ScenarioEngine will automatically be notified when the day changes
+            scenarioEngine.findNextScenario();
+            updateScenarioText();
+            choiceSystem.generateChoiceButtons();
         }
 
         // Exit Button
@@ -266,7 +273,7 @@ public class PlayGame implements Screen {
         }
     }
 
-    // Helper Method
+    // Helper Method - Updated to remove END_OF_DAY case
     private String getRegionNameForSlot(DayCycle.TimeSlot slot) {
         switch (slot) {
             case MORNING: return "Ui_Morning";
