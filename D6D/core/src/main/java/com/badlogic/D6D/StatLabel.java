@@ -13,6 +13,7 @@ public class StatLabel {
     private final float x, y;
     private final GlyphLayout layout = new GlyphLayout();
     private final Viewport viewport;
+    private String text = null;
 
     public StatLabel(String statName, float x, float y, Viewport viewport) {
         this.statName = statName;
@@ -30,27 +31,34 @@ public class StatLabel {
 
     // Rendering Behavior
     public void render(SpriteBatch batch) {
-        String text;
+    String displayText;
 
+    if (text != null) {
+        displayText = text;
+    } else {
         Player player = Player.getInstance();
-
         switch (statName) {
             case "PlayerName":
-                text = player.name;
+                displayText = player.name;
                 break;
             case "Health":
-                text = player.getCurrentHealth() + " / " + player.getBaseHealth();
+                displayText = player.getCurrentHealth() + " / " + player.getBaseHealth();
                 break;
             case "Sanity":
-                text = player.getCurrentSanity() + " / " + player.getBaseSanity();
+                displayText = player.getCurrentSanity() + " / " + player.getBaseSanity();
                 break;
             default:
                 int value = player.getStat(statName);
-                text = String.valueOf(value);
+                displayText = String.valueOf(value);
                 break;
         }
+    }
 
-        layout.setText(font, text);
-        font.draw(batch, layout, x - layout.width / 2, y + layout.height / 2);
+    layout.setText(font, displayText);
+    font.draw(batch, layout, x - layout.width / 2, y + layout.height / 2);
+    }
+
+    public void setText(String newText) {
+    this.text = newText;
     }
 }
