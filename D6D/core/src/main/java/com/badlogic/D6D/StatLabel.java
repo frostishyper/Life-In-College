@@ -1,64 +1,76 @@
 package com.badlogic.D6D;
 
-// Import Statements
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-// Class To Display Player Stats And Info To The Screen
-public class StatLabel {
-    private final String statName;
-    private final BitmapFont font;
-    private final float x, y;
-    private final GlyphLayout layout = new GlyphLayout();
-    private final Viewport viewport;
-    private String text = null;
 
-    public StatLabel(String statName, float x, float y, Viewport viewport) {
-        this.statName = statName;
+    public class StatLabel {
+    private String type;
+    private float x, y;
+    private BitmapFont font;
+    private GlyphLayout layout;
+    private Viewport viewport;
+    private String customText;
+    
+    public StatLabel(String type, float x, float y, Viewport viewport) {
+        this.type = type;
         this.x = x;
         this.y = y;
         this.viewport = viewport;
-        this.font = new BitmapFont();
-
-        if (statName.equals("PlayerName")) {
-            font.getData().setScale(1.5f);
-        } else {
-            font.getData().setScale(1.2f);
-        }
+        
+        // Initialize font and layout
+        font = new BitmapFont();
+        font.getData().setScale(1.0f);
+        font.setColor(Color.WHITE);
+        layout = new GlyphLayout();
     }
-
-    // Rendering Behavior
+    
+    // Renders Stat Label
     public void render(SpriteBatch batch) {
-    String displayText;
-
-    if (text != null) {
-        displayText = text;
-    } else {
+        String text = getText();
+        layout.setText(font, text);
+        font.draw(batch, text, x - layout.width / 2, y);
+    }
+    
+    // Custom Text For Label
+    public void setText(String text) {
+        this.customText = text;
+    }
+    
+    // Sets the type of stat to display
+    private String getText() {
+        if (customText != null) {
+            return customText;
+        }
+        
         Player player = Player.getInstance();
-        switch (statName) {
+        
+        switch (type) {
             case "PlayerName":
-                displayText = player.name;
-                break;
+                return player.name;
             case "Health":
-                displayText = player.getCurrentHealth() + " / " + player.getBaseHealth();
-                break;
+                return player.getCurrentHealth() + "/" + player.getBaseHealth();
             case "Sanity":
-                displayText = player.getCurrentSanity() + " / " + player.getBaseSanity();
-                break;
+                return player.getCurrentSanity() + "/" + player.getBaseSanity();
+            case "Intelligence":
+            case "Mental":
+            case "Constitution":
+            case "Swiftness":
+            case "Courage":
+            case "Charisma":
+                return String.valueOf(player.getStat(type));
             default:
-                int value = player.getStat(statName);
-                displayText = String.valueOf(value);
-                break;
+                return "";
         }
     }
-
-    layout.setText(font, displayText);
-    font.draw(batch, layout, x - layout.width / 2, y + layout.height / 2);
-    }
-
-    public void setText(String newText) {
-    this.text = newText;
+    
+    // Disposal
+    public void dispose() {
+        if (font != null) {
+            font.dispose();
+        }
     }
 }
